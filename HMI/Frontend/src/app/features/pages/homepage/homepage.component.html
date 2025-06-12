@@ -1,0 +1,22 @@
+<section class="py-[100px]">
+
+  <div class="container">
+    <div class="section-title justify-between items-center">
+      <h2><span class="bg-gradient-to-r from-[#141414] to-[#6A5ACD] inline-block text-transparent bg-clip-text">Hi there,</span><br><span class="bg-gradient-to-r from-[#141414] via-[#6A5ACD] to-[#2b85ff] inline-block text-transparent bg-clip-text">What would you like to know?</span></h2>
+    </div>
+    <div class="chat-area mt-[50px]">
+      <div class="chat-area__input bg-white p-[15px_20px] rounded-[10px] relative mb-[15px]">
+        <form class="flex h-[100%]" [formGroup]="myForm" (submit)="submit()">
+          <textarea name="" id="" placeholder="Ask something.." class="w-full resize-none text-[16px]/[24px] font-[400] min-h-[7rem] outline-none" formControlName="message"></textarea>
+          <button type="submit" class="bg-primary-color w-[40px] h-[30px] rounded-[5px] text-white text-[23px]/[1] absolute right-[20px] bottom-[15px]"><i class="bi bi-arrow-right-short"></i></button>
+        </form>
+      </div>
+      <div class="chat-area__response">
+        <h4 class="text-black text-[16px]/[24px] font-[500] mb-[15px]" *ngIf="isGeneration">Generating response...</h4>
+        <h4 class="text-black text-[16px]/[24px] font-[500] mb-[15px]" *ngIf="response">Response</h4>
+        <div class="chat-area__response--box border-[1px] border-border-color p-[15px_25px] rounded-[10px]" [innerHTML]="response" *ngIf="response">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
