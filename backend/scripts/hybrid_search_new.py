@@ -193,17 +193,34 @@ def filter_by_project_actors(results, project_name):
             filtered.append(r)
     return filtered
 
+def infer_story_intent(emails):
+    text = " ".join(email["summary"].lower() for email in emails)
+    
+    if any(kw in text for kw in ["fraud", "scam", "mislead", "bribe", "embezzle", "kickback", "phony"]):
+        return "fraud"
+    elif any(kw in text for kw in ["sale", "offer", "promotion", "discount", "free trial", "deal", "advertise"]):
+        return "advertisement"
+    elif any(kw in text for kw in ["meeting", "negotiation", "contract", "sign-off", "proposal", "update", "budget"]):
+        return "business communication"
+    elif any(kw in text for kw in ["threat", "warning", "lawsuit", "compliance", "legal"]):
+        return "legal concern"
+    else:
+        return "general"
+
 def generate_story_narrative(story_emails, project_name):
     actors = sorted(set(actor for email in story_emails for actor in email.get('actors', [])))
     summaries = "\n\n".join(f"- {email['summary']}" for email in story_emails)
 
+    intent = infer_story_intent(story_emails)
+
     prompt = (
-        f"Generate a professional journalistic summary story for the project '{project_name}'. "
-        f"Include a clear title, list the main actors, and provide a brief content summary.\n\n"
-        f"Actors: {', '.join(actors)}\n\n"
-        f"Summaries:\n{summaries}\n\n"
-        "Output format:\n"
-        "Title: <title>\nActors: <comma separated actors>\nContent: <brief narrative>\n"
+        f"You are a professional investigative journalist. Your job is to analyze internal emails "
+        f"related to the project '{project_name}' and generate a report.\n\n"
+        f"First, identify the overall INTENT of these emails. Then write a summary story with a title, "
+        f"actor list, and a coherent narrative.\n\n"
+        f"Emails:\n{summaries}\n\n"
+        f"Output format:\n"
+        f"Title: <title>\nActors: <comma separated actors>\nIntent: {intent}\nContent: <story content>"
     )
 
     model = genai.GenerativeModel('gemini-2.5-flash')
@@ -211,7 +228,7 @@ def generate_story_narrative(story_emails, project_name):
         prompt,  # just the full string
         generation_config={
             "temperature": 0.3,
-            "max_output_tokens": 1024
+            "max_output_tokens": 2048
         }
     )
 
@@ -237,8 +254,9 @@ def generate_story_narrative(story_emails, project_name):
     content = "\n".join(content_lines).replace("Content:", "").strip()
 
     return {
-        "title": title,
-        "actors": [a.strip() for a in actors_line.split(",")],
+        "title": f"{project_name}: {intent.capitalize()} Story",
+        "actors": actors,
+        "intent": intent,
         "content": content
     }
 

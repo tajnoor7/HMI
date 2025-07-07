@@ -3,11 +3,11 @@
     "semantic": [
         {
             "actors": [
-                "Judy",
                 "Judy Thorne",
+                "##bra Perling",
                 "##bra Perlingier",
-                "De",
-                "##bra Perling"
+                "Judy",
+                "De"
             ],
             "body": "Debra Perlingiere\nEnron North America Corp.\nLegal Department\n1400 Smith Street, EB 3885\nHouston, Texas 77002\ndperlin@enron.com\nPhone 713-853-7658\nFax  713-646-3490\n\n----- Forwarded by Debra Perlingiere/HOU/ECT on 05/30/2001 03:39 PM -----\n\n\tJudy Thorne/ENRON@enronXgate\n\t05/30/2001 08:52 AM\n\t\t \n\t\t To: wkhu@dynegy.com@SMTP@enronXgate\n\t\t cc: Debra Perlingiere/HOU/ECT@ECT, Judy Thorne/ENRON@enronXgate\n\t\t Subject: GISB\n\nKent,\n\nPer our discussion,  I am forwarding for your review the attached sample of \nEnron Upstream Company, LLC's GISB.   Please do not hesitate to give me a \ncall with any questions you may have regarding the enclosed.\n\n\nThanks,\nJudy Thorne\nENA Upstream Company LLC",
             "category": 0,
@@ -41,31 +41,31 @@
         },
         {
             "actors": [
-                "Jeff Dasovich",
-                "Nov",
-                "Mary Hai",
-                "Susan J Mara",
+                "Joe Hart",
+                "Tom Briggs",
+                "Jeff Davis",
+                "Richard B Sanders",
+                "Karen Den",
+                "Scott Goven",
                 "John N",
+                "Paul Kaufman",
+                "Tim Bel",
+                "Robert Badeer",
+                "James",
+                "Mary Hai",
+                "Jeff Dasovich",
                 "m",
                 "Sandra McCub",
-                "Guerrero",
-                "Richard B Sanders",
-                "Robert Badeer",
-                "Scott Goven",
-                "Joe Hart",
-                "Harry Kingers",
-                "Karen Den",
-                "Jane",
-                "Richard Shapiro",
-                "Tim Bel",
-                "Christopher F",
-                "Christian Yo",
-                "Paul Kaufman",
-                "James",
                 "St",
-                "Jeff Davis",
+                "Nov",
+                "Richard Shapiro",
+                "Harry Kingers",
+                "Christian Yo",
+                "Susan J Mara",
                 "Linda Robertson",
-                "Tom Briggs"
+                "Guerrero",
+                "Christopher F",
+                "Jane"
             ],
             "body": "30 days is hardly long-term.... i think we should call him on it.\n\n\nFrom: Jeff Dasovich on 03/05/2001 04:34 PM\nSent by: Jeff Dasovich\nTo: Karen Denne/Corp/Enron@ENRON, Susan J Mara/NA/Enron@ENRON, Sandra \nMcCubbin/NA/Enron@Enron, mpalmer@enron.com, Christopher F Calger/PDX/ECT@ECT, \nTim Belden/HOU/ECT@ECT, Robert Badeer/HOU/ECT@ECT, Mary Hain/HOU/ECT@ECT, Joe \nHartsoe/Corp/Enron@ENRON, Linda Robertson/NA/Enron@ENRON, Sarah \nNovosel/Corp/Enron@ENRON, Tom Briggs/NA/Enron@Enron, John \nNeslage/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, James D Steffes/NA/Enron@Enron, \nRichard Shapiro/NA/Enron@Enron, skean@enron.com, Paul Kaufman/PDX/ECT@ECT, \nMDay@GMSSR.com, Scott Govenar <sgovenar@govadv.com>, Harry \nKingerski/NA/Enron@Enron, Richard B Sanders/HOU/ECT@ECT, Christian \nYoder/HOU/ECT@ECT, Janel Guerrero/Corp/Enron@Enron\ncc:  \n\nSubject: Davis announces first round of long-term power contracts \n\nFYI--Davis includes us as one of the companies he signed up. I'm only aware \nof a 30-day deal with an option to extend for 5 years (option ends toward the \nend of the month, as I understand it). Not aware of any other deals we've \ndone with DWR at this time, though others are on the table----DWR's \ncreditworthiness remains an issue.\nBest,\nJeff\n\nDavis announces first round of long-term power contracts \nDON THOMPSON, Associated Press Writer\nMonday, March 5, 2001 \n,2001 Associated Press \n(03-05) 12:31 PST SACRAMENTO (AP) -- The state has reached 40 long-sought \nlong-term contracts and other agreements to keep power flowing to customers \nof two financially ailing utilities, Gov. Gray Davis announced Monday. \nThe deals will supply an average of nearly 8,900 megawatts per year for \nSouthern California Edison and Pacific Gas and Electric Co. customers over \nthe next 10 years and let the state buy power for far less than it has been \npaying on the costly spot market, Davis said in a written statement. \nOne megawatt is enough power for about 1,000 households. \nFor the first five years, the contracts provide power at an average price of \n$79 per megawatt hour, about 75 percent below recent costs on the spot \nelectricity market, Davis said. \nThe price drops to an average of $61 per megawatt hour, about 80 percent \nbelow spot prices, he said. \n``These agreements are the bedrock of a long-term energy solution,'' Davis \nsaid in remarks prepared for delivery Monday afternoon in Los Angeles. ``The \nprovide reliability at a reasonable price.'' \nSome of the contract negotiations will result in accelerated power plant \nconstruction, adding an estimated 5,000 megawatts to the state grid within \nthe next two years, some by this summer, Davis said. \nThe contracts amount to 75 percent of the long-term deals the Davis \nadministration has sought under a new law that lets the state spend an \nestimated $10 billion over a decade to buy power for Edison and PG&E \ncustomers. \nDavis has pitched such contracts as one way to lift California out of its \nenergy crisis. Negotiations have taken longer than expected, however, as his \nadministration and power providers haggled over how much the state should \npay. \nThe Davis administration wants to stop paying for power on the expensive spot \nmarket, where desperation to keep the lights on leads to inflated prices. \nOn Friday, the state released another $500 million to continue making such \npurchases on behalf of the state's two big cash-strapped utilities, bringing \nits spending so far to some $3.2 billion since early January. \nThe agreements announced Monday include more than 20 power suppliers, \nincluding electricity giants Duke Energy, Calpine, Dynegy, Enron and Reliant. \nDavis declined to release details on individual contracts. \nDuke Energy said it has reached a $4 billion, nine-year agreement to sell \nelectricity to the state. \nThe memorandum of understanding calls for Duke to provide 550 megawatts \nstarting next Jan. 1. That's enough power for roughly 550,000 households. \nThat amount would rise to 800 megawatts Jan. 1, 2003, enough electricity for \nthe equivalent of 800,000 households. The contract would continue through \n2010. \n``We believe long-term contracts provide the critical underpinning for a \nstable electricity market and are happy the state is moving in that \ndirection,'' Bill Hall, head of Duke's California operations, said in a \nwritten statement. \nThe state is buying about one-third of the power used by the customers of \nEdison and PG&E. Both have been denied credit by suppliers who fear the \nfinancially troubled utilities won't pay for the power. \nCalifornia plans to recover those costs by issuing $10 billion in revenue \nbonds in May, with the rest of that money going to finance the cheaper, \nlong-term power contracts. \nIn addition to the long-term contracts, the Department of Water Resources has \nreached 11 agreements letting it buy a substantial amount of power on the \nday-ahead market, cutting the state's payment of premium prices on the \nreal-time market, Davis said. \nA Stage 1 power alert was called Monday morning with reserves threatening to \ndrop to 7 percent due to power plant maintenance and low electricity imports, \nsaid Patrick Dorinson, spokesman for the Independent System Operator. The ISO \nmanages the state's power grid.",
             "category": 2,
@@ -174,26 +174,26 @@
         },
         {
             "actors": [
-                "Cody",
-                "Mary Hai",
-                "Bob Gates",
-                "Alex Suga",
-                "Joe",
-                "Alan Com",
-                "Curtis",
-                "Bob Esca",
-                "Bill Woods",
                 "Ha",
-                "Joe Ha",
-                "Bill Carlson",
-                "Katie Kaplan",
                 "Sue Mara",
-                "Carolyn A Baker",
-                "Bob Elle",
                 "David",
+                "Joe",
                 "Hart",
+                "Curtis",
+                "Carolyn A Baker",
+                "Bill Carlson",
+                "Alan Com",
+                "Joe Ha",
+                "Mary Hai",
+                "Katie Kaplan",
+                "Bob Esca",
+                "Cody",
                 "##p Boyd",
-                "Boyd"
+                "Bob Elle",
+                "Bill Woods",
+                "Boyd",
+                "Alex Suga",
+                "Bob Gates"
             ],
             "body": "Hap -- Please discuss with Mary Hain, Sue Mara and Alan Comnes for their \nreview.  Also please call me -202.466.9150.  We should not sign on to these \nuntil we talk and have internal sign offs.  Thanks Joe\n\n\n\n\tHap Boyd\n\t03/20/2001 09:48 AM\n\t\t \n\t\t To: Joe Hartsoe/Corp/Enron@ENRON\n\t\t cc: \n\t\t Subject: FW: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report\n\nJoe,\nIf you have any comments, please let me know. Thanks.\nHap\n---------------------- Forwarded by Hap Boyd/EWC/Enron on 03/20/2001 08:00 AM \n---------------------------\n\n\n\"Katie Kaplan\" <kaplan@iepa.com> on 03/19/2001 09:14:47 PM\nTo: \"'Alex Sugaoka (E-mail)'\" <alex.sugaoka@uaecorp.com>, \"'Bill Carlson \n(E-mail)'\" <william_carlson@wastemanagement.com>, \"'Bill Woods (E-mail)'\" \n<billw@calpine.com>, \"'Bob Ellery (E-mail)'\" <bellery@spi-ind.com>, \"'Bob \nEscalante (E-mail)'\" <rescalante@riobravo-gm.com>, \"'Bob Gates (E-mail)'\" \n<bob.gates@enron.com>, \"'Carolyn A Baker (E-mail)'\" \n<cabaker@duke-energy.com>, \"'Cody Carter (E-mail)'\" \n<cody.carter@williams.com>, \"'Curt Hatton (E-mail)'\" \n<Curt.Hatton@gen.pge.com>, \"'Curtis Kebler (E-mail)'\" \n<curtis_l_kebler@reliantenergy.com>, \"'David Parquet'\" \n<david.parquet@enron.com>, \"'Dean Gosselin (E-mail)'\" \n<dean_gosselin@fpl.com>, \"'Doug Fernley (E-mail)'\" \n<fernley.doug@epenergy.com>, \"'Douglas Kerner (E-mail)'\" <dkk@eslawfirm.com>, \n\"'Duane Nelsen (E-mail)'\" <dnelsen@gwfpower.com>, \"'Ed Tomeo (E-mail)'\" \n<ed.tomeo@uaecorp.com>, \"'Eileen Koch (E-mail)'\" <eileenk@calpine.com>, \n\"'Eric Eisenman (E-mail)'\" <eric.eisenman@gen.pge.com>, \"'Frank DeRosa \n(E-mail)'\" <frank.derosa@gen.pge.com>, \"Frazier Blaylock (E-mail)\" \n<frazier_blaylock@ogden-energy.com>, \"'Greg Blue (E-mail)'\" \n<gtbl@dynegy.com>, \"'Hap Boyd (E-mail)'\" <Hap_Boyd@enron.com>, \"'Hawks Jack \n(E-mail)'\" <jack.hawks@gen.pge.com>, \"'Jack Pigott (E-mail)'\" \n<jackp@calpine.com>, \"'Jim Willey (E-mail)'\" <elliottsa@earthlink.net>, \"'Joe \nGreco (E-mail)'\" <jgreco@caithnessenergy.com>, \"'Joe Ronan (E-mail)'\" \n<joer@calpine.com>, \"'John Stout (E-mail)'\" <john_h_stout@reliantenergy.com>, \n\"'Jonathan Weisgall (E-mail)'\" <jweisgall@aol.com>, \"'Kate Castillo \n(E-mail)'\" <CCastillo@riobravo-gm.com>, \"'Kelly Lloyd (E-mail)'\" \n<kellyl@enxco.com>, \"'Ken Hoffman (E-mail)'\" <khoffman@caithnessenergy.com>, \n\"'Kent Fickett (E-mail)'\" <kfickett@usgen.com>, \"'Kent Palmerton'\" \n<kent.palmerton@williams.com>, \"'Lynn Lednicky (E-mail)'\" \n<lynn.a.lednicky@dynegy.com>, \"'Marty McFadden (E-mail)'\" \n<marty_mcfadden@ogden-energy.com>, \"'Paula Soos'\" \n<paula_soos@ogden-energy.com>, \"'Randy Hickok (E-mail)'\" \n<rjhickok@duke-energy.com>, \"Rick S. Koebbe (E-mail)\" \n<rskoebbe@powerworksinc.com>, \"'Rob Lamkin (E-mail)'\" \n<rllamkin@seiworldwide.com>, \"'Roger Pelote (E-mail)'\" \n<roger.pelote@williams.com>, \"'Ross Ain (E-mail)'\" <ain@worldnet.att.net>, \n\"'Stephanie Newell (E-mail)'\" <stephanie-newell@reliantenergy.com>, \"'Steve \nIliff'\" <siliff@riobravo-gm.com>, \"'Steve Ponder (E-mail)'\" \n<steve_ponder@fpl.com>, \"'Susan J Mara (E-mail)'\" <smara@enron.com>, \"'Tony \nWetzel (E-mail)'\" <twetzel@thermoecotek.com>, \"'William Hall (E-mail)'\" \n<wfhall2@duke-energy.com>, \"'Alex Makler (E-mail)'\" <alexm@calpine.com>, \"Bob \nSzymanski (E-mail)\" <rjszymanski@powerworksinc.com>, \"'D. Frank (E-mail)'\" \n<dfrank@seawestwindpower.com>, \"'David Dickey (E-mail)'\" \n<david.dickey@calenergy.com>, \"'Doug Levitt (E-mail)'\" <SDL@calwind.com>, \n\"'Ed Maddox (E-mail)'\" <emaddox@seawestwindpower.com>, \"'Eric Edstrom'\" \n<edstrome@epenergy.com>, \"'Jeff Dasovich (E-mail)'\" \n<Jeff.Dasovich@enron.com>, \"'Julie Simon (E-mail)'\" <jsimon@epsa.org>, \n\"'Lucian Fox (E-mail)'\" <lucian_fox@ogden-energy.com>, \"'Mark J. Smith'\" \n<mark_J_smith@fpl.com>, \"'Milton Schultz (E-mail)'\" <bfpjv@c-zone.net>, \"'Nam \nNguyen'\" <nam.nguyen@powersrc.com>, \"'Paul Wood (E-mail)'\" \n<paul_wood@ogden-energy.com>, \"'Pete Levitt (E-mail)'\" <Pete@calwind.com>, \n\"'Rich Dyer (E-mail)'\" <rich_dyer@ogden-energy.com>, \"'Robert Frees \n(E-mail)'\" <freesrj@apci.com>, \"'Scott Harlan'\" <harlans@epenergy.com>, \"'Ted \nCortopassi (E-mail)'\" <ted_cortopassi@ogden-energy.com>, \"'Thomas Heller \n(E-mail)'\" <hellertj@apci.com>, \"'Tom Hartman'\" <tom_hartman@fpl.com>, \"'Ward \nScobee (E-mail)'\" <wscobee@caithnessenergy.com>\ncc: \"Andy Brown (E-mail)\" <ABB@eslawfirm.com> \n\nSubject: FW: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report\n\n\nGreetings:\nThis is the subject of tomorrow's ISO/FERC call.  We will also be discussing\nthe ISO Market Repair Team and Stabilization Plan, and the New Facility\nInterconnection Tariff language.   Please let me know if there are any other\nissues you would like to address.\n\nKatie Kaplan\nManager of State Policy Affairs\nIndependent Energy Producers Association\n(916) 448-9499\n\n-----Original Message-----\nFrom: andy brown [mailto:andybrwn@earthlink.net]\nSent: Monday, March 19, 2001 5:36 PM\nTo: Katie Kaplan\nCc: 'Alex Sugaoka (E-mail)'; 'Bill Carlson (E-mail)'; 'Bill Woods (E-mail)';\n'Bob Ellery (E-mail)'; 'Bob Escalante (E-mail)'; 'Bob Gates (E-mail)';\n'Carolyn A Baker (E-mail)'; 'Cody Carter (E-mail)'; 'Curt Hatton (E-mail)';\n'Curtis Kebler (E-mail)'; 'David Parquet'; 'Dean Gosselin (E-mail)'; 'Doug\nFernley (E-mail)'; 'Douglas Kerner (E-mail)'; 'Duane Nelsen (E-mail)'; 'Ed\nTomeo (E-mail)'; 'Eileen Koch (E-mail)'; 'Eric Eisenman (E-mail)'; 'Frank\nDeRosa (E-mail)'; Frazier Blaylock (E-mail); 'Greg Blue (E-mail)'; 'Hap Boyd\n(E-mail)'; 'Hawks Jack (E-mail)'; 'Jack Pigott (E-mail)'; 'Jim Willey\n(E-mail)'; 'Joe Greco (E-mail)'; 'Joe Ronan (E-mail)'; 'John Stout\n(E-mail)'; 'Jonathan Weisgall (E-mail)'; 'Kate Castillo (E-mail)'; 'Kelly\nLloyd (E-mail)'; 'Ken Hoffman (E-mail)'; 'Kent Fickett (E-mail)'; 'Kent\nPalmerton'; 'Lynn Lednicky (E-mail)'; 'Marty McFadden (E-mail)'; 'Paula\nSoos'; 'Randy Hickok (E-mail)'; Rick S. Koebbe (E-mail); 'Rob Lamkin\n(E-mail)'; 'Roger Pelote (E-mail)'; 'Ross Ain (E-mail)'; 'Stephanie Newell\n(E-mail)'; 'Steve Iliff'; 'Steve Ponder (E-mail)'; 'Susan J Mara (E-mail)';\n'Tony Wetzel (E-mail)'; 'William Hall (E-mail)'; 'Alex Makler (E-mail)'; Bob\nSzymanski (E-mail); 'D. Frank (E-mail)'; 'David Dickey (E-mail)'; 'Doug\nLevitt (E-mail)'; 'Ed Maddox (E-mail)'; 'Eric Edstrom'; 'Jeff Dasovich\n(E-mail)'; 'Julie Simon (E-mail)'; 'Lucian Fox (E-mail)'; 'Mark J. Smith';\n'Milton Schultz (E-mail)'; 'Nam Nguyen'; 'Paul Wood (E-mail)'; 'Pete Levitt\n(E-mail)'; 'Rich Dyer (E-mail)'; 'Robert Frees (E-mail)'; 'Scott Harlan';\n'Ted Cortopassi (E-mail)'; 'Thomas Heller (E-mail)'; 'Tom Hartman'; 'Ward\nScobee (E-mail)'; Carol H Hudson (E-mail); Steven Kelly (E-mail); Andy Brown\n(E-mail); Bob Weisenmiller (E-mail); Jan Smutny-Jones (E-mail);\njmpa@dynegy.com; runwithmee@aol.com\nSubject: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report\nImportance: High\n\nAttached in Word format are the draft IEP comments, due to be filed on the\n22nd, regarding the FERC Staff Report on market monitoring and market power\nmitigation.  This is my suggested approach, which is obviously subject to\nchange per our discussion during the call tomorrow.\n\nI would like to highlight that the draft characterizes the approach as a\n\"circuit breaker\" during periods of highest demand and suggests that this is\ndistinct from notions of market power abuse.  Other entities are arguing\nthat during the highest demand, when it exceeds available supplies, all\nsuppliers have and are \"exercising\" (as distinct from abusing?) market\npower.  The draft attempts to highlight the current regional supply context\ncharacterized by the drought as a rationale for the \"emergency circuit\nbreaker.\"\n\nAs mentioned in Katie Kaplan's email this morning, if your company has a\ndraft of comments, we would appreciate an opportunity to look at them to\navoid substantive conflicts.\n\nI trust this is the right distribution list but I was not able to use the\nlist from this morning's email because of computer problems at my end.  ABB\n\n--\nAndrew Brown\nSacramento, CA\nabb@eslawfirm.com\n\n - DRAFT_010318_el00-95-012_IEP_Cmts_Staff_Rpt.doc",
             "category": 1,
@@ -237,15 +237,15 @@
                 "Judy",
                 "Judy Thorne"
             ],
-            "content": "Enron North America Corp., a company founded in 1984 and headquartered in Houston, Texas, emerged as a significant entity in the energy sector.",
+            "content": "Intent: To provide foundational company information while also offering critical emotional support resources, strongly suggesting an underlying environment of distress or crisis within the organization.\n This singular internal communication, ostensibly a simple informational note, reveals a deeply unsettling undercurrent within Enron North America Corp. The email begins with standard corporate boilerplate, detailing the company's founding year and location. However, it abruptly transitions to providing contact information for the Samaritans, a confidential support helpline for individuals experiencing emotional distress or contemplating suicide. This stark and unusual juxtaposition strongly suggests that beneath the surface of corporate operations, there was a significant level of stress, anxiety, or crisis impacting Enron's workforce. The inclusion of a UK-based helpline for a US-headquartered company further raises questions about the specific context or global reach of this distress. This is not a typical business update; rather, it functions as a welfare message, hinting at an internal environment so fraught with turmoil that the provision of external crisis intervention resources was deemed necessary by the email's author, likely a representative of management or HR. The communication serves as an implicit acknowledgment of profound emotional difficulties among employees, a silent testament to the pressures or events unfolding within the company.",
             "emails": [
                 {
                     "actors": [
-                        "Judy",
                         "Judy Thorne",
+                        "##bra Perling",
                         "##bra Perlingier",
-                        "De",
-                        "##bra Perling"
+                        "Judy",
+                        "De"
                     ],
                     "body": "Debra Perlingiere\nEnron North America Corp.\nLegal Department\n1400 Smith Street, EB 3885\nHouston, Texas 77002\ndperlin@enron.com\nPhone 713-853-7658\nFax  713-646-3490\n\n----- Forwarded by Debra Perlingiere/HOU/ECT on 05/30/2001 03:39 PM -----\n\n\tJudy Thorne/ENRON@enronXgate\n\t05/30/2001 08:52 AM\n\t\t \n\t\t To: wkhu@dynegy.com@SMTP@enronXgate\n\t\t cc: Debra Perlingiere/HOU/ECT@ECT, Judy Thorne/ENRON@enronXgate\n\t\t Subject: GISB\n\nKent,\n\nPer our discussion,  I am forwarding for your review the attached sample of \nEnron Upstream Company, LLC's GISB.   Please do not hesitate to give me a \ncall with any questions you may have regarding the enclosed.\n\n\nThanks,\nJudy Thorne\nENA Upstream Company LLC",
                     "category": 0,
@@ -278,14 +278,14 @@
                     "summary": "Enron North America Corp. was founded in 1984. The company is based in Houston, Texas. For confidential support call the Samaritans on 08457 90 90 90, visit a local Samaritans branch or see www.samaritans.org."
                 }
             ],
-            "title": "Enron Corporation: A Brief Overview"
+            "title": "enron: General Story"
         },
         {
             "actors": [
-                "Anastasia Aourik",
+                "Anastasia Aour",
                 "Kenneth Lay"
             ],
-            "content": "Amidst Enron's escalating financial crisis, Anastasia Aourik reached out directly to then-CEO Kenneth Lay, offering to assist the embattled energy giant in securing the \"millions/billions\" of dollars critically needed for its immediate short-term survival. Her communication underscored the company's precarious financial position and the desperate search for capital to avert collapse.",
+            "content": "Intent: Addressing immediate financial crisis and securing capital for short-term survival.\n\nIn a stark indication of Enron's precarious financial position, Anastasia Aourik directly contacted CEO Kenneth Lay with an urgent offer of assistance. Her communication centered on the critical need to raise \"millions/billions\" of dollars, explicitly stating this massive capital injection was required for the company's \"shortrun\" survival. This email suggests Enron was facing an immediate and severe liquidity crisis, necessitating an extraordinary effort to secure funds to prevent imminent collapse and highlighting the desperate measures being considered to keep the company afloat.",
             "emails": [
                 {
                     "actors": [
@@ -325,13 +325,13 @@
                     "summary": "Anastasia Aourik wrote to Kenneth Lay, CEO of Enron. She wanted to help raise the \"millions/billions\" of dollars needed to survive in the shortrun."
                 }
             ],
-            "title": "Enron's Desperate Hour: An Offer of Financial Lifeline"
+            "title": "enron: General Story"
         },
         {
             "actors": [
                 "McMahon"
             ],
-            "content": "A recent internal assessment of Enron's extensive business portfolio, reportedly involving key personnel such as McMahon, has categorized the company's approximately $8 billion in investments into three distinct segments: Core, Non-core, and Under Review. This strategic grouping has, however, highlighted a significant concern: these substantial assets have collectively yielded 'dismal' returns, prompting questions about the efficacy of Enron's investment strategies and the future viability of these diverse holdings.",
+            "content": "Intent: The overall intent of these communications is to signal a critical strategic review and re-evaluation of Enron's extensive asset portfolio, driven by significantly underperforming investments. It indicates a move towards identifying, categorizing, and likely addressing or divesting assets that are not meeting profitability expectations, aiming to improve overall financial performance.\n Enron Corporation, grappling with a staggering $8 billion in investments that have yielded \"dismal\" returns, has initiated a comprehensive internal strategic review of its vast business portfolio. Under the direction of its leadership, the company's diverse assets have been meticulously categorized into three distinct groups: 'Core,' 'Non-core,' and 'Under Review.' This internal classification, spearheaded by dedicated asset review teams, serves as a critical first step in addressing the widespread underperformance that has plagued a significant portion of the company's financial commitments. The move signals an urgent internal effort to identify, assess, and ultimately decide the fate of these underperforming assets, with potential implications for future divestitures, restructuring, or a complete overhaul of investment strategies to salvage shareholder value.",
             "emails": [
                 {
                     "actors": [
@@ -370,7 +370,7 @@
                     "summary": "Enron's business has been grouped into three buckets:  Core, Non-core, and Under Review. Enron has approx. $8Bn in investments in these assets, and they have produced 'dismal' returns."
                 }
             ],
-            "title": "Enron's $8 Billion Portfolio Under Scrutiny Amid 'Dismal' Returns"
+            "title": "enron: General Story"
         }
     ]
 }
