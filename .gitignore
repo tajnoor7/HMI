@@ -1,0 +1,125 @@
+# -------------------------
+# Python files (INSIDE backend/)
+# -------------------------
+
+/backend/scripts/__pycache__/*
+/backend/utils/__pycache__/*
+/backend/*.py[cod]
+/backend/*$py.class
+
+# Virtual environments
+/backend/env/
+/backend/venv/
+/backend/ENV/
+/backend/env.bak/
+/backend/venv.bak/
+
+# Distribution / packaging
+/backend/build/
+/backend/develop-eggs/
+/backend/dist/
+/backend/downloads/
+/backend/eggs/
+/backend/.eggs/
+/backend/lib/
+/backend/lib64/
+/backend/parts/
+/backend/sdist/
+/backend/var/
+/backend/*.egg-info/
+/backend/.installed.cfg
+/backend/*.egg
+/backend/*.egg-info/
+/backend/wheelhouse/
+/backend/pip-wheel-metadata/
+/backend/pip-log.txt
+/backend/pip-delete-this-directory.txt
+
+# Installer logs
+/backend/pip-log.txt
+/backend/pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+/backend/htmlcov/
+/backend/.tox/
+/backend/.nox/
+/backend/.coverage
+/backend/.coverage.*
+/backend/.cache
+/backend/nosetests.xml
+/backend/coverage.xml
+/backend/*.cover
+/backend/.hypothesis/
+
+# SQLite database file
+/backend/db/*
+
+/backend/INEnron/*
+
+# Environment variables
+.env
+.env.*
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# MacOS
+.DS_Store
+
+# Linux
+*.swp
+
+# -------------------------
+# Node.js / Angular files
+# -------------------------
+# dependencies
+/frontend/node_modules/
+
+# logs
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+
+# runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# build output
+/frontend/dist/
+/frontend/tmp/
+/frontend/out-tsc/
+/frontend/coverage/
+/frontend/.angular/
+/frontend/.angular-cache/
+
+# lockfiles
+/frontend/package-lock.json
+/frontend/yarn.lock
+
+# Editor directories and files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Compiled output
+*.js
+*.js.map
+
+# TypeScript cache
+*.tsbuildinfo
+
+# optional npm cache directory
+.npm
+
+# optional eslint cache
+.eslintcache
+
+# environment files
+.env
+.env.*.local
