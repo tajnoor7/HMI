@@ -53,8 +53,10 @@
 
 # SQLite database file
 /backend/db/*
+!/backend/db/t.txt
 
 /backend/INEnron/*
+!/backend/INEnron/t.txt
 
 # Environment variables
 .env

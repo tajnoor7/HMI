@@ -1,6 +1,3 @@
-## Not necessary to import
-
-
 from transformers import pipeline
 import torch
 import re

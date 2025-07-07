@@ -1,215 +1,376 @@
-#!/usr/bin/env python
-import os
-import sqlite3
-import re
-import numpy as np
-
-from sentence_transformers import SentenceTransformer
-from sklearn.cluster import KMeans
-from transformers import pipeline
-
-DB_PATH     = 'db/emails.db'
-EMBED_MODEL = 'all-MiniLM-L6-v2'
-LEX_LIMIT   = 10
-SEM_LIMIT   = 10
-
-# Preload models
-_embedder   = SentenceTransformer(EMBED_MODEL)
-_classifier = pipeline(
-    "zero-shot-classification",
-    model="facebook/bart-large-mnli"
-)
-
-# Your human-readable categories
-LABELS = [
-    "legal",
-    "financial",
-    "project discussion",
-    "human resources",
-    "operations",
-    "general"
-]
-
-# In-memory caches for the entire corpus
-_ALL = {
-    'ids': None,
-    # 'senders': None,
-    # 'receivers': None,
-    'subjects': None,
-    'bodies': None,
-    'embeddings': None
+{
+    "query": "enron",
+    "semantic": [
+        {
+            "actors": [
+                "Judy",
+                "Judy Thorne",
+                "##bra Perlingier",
+                "De",
+                "##bra Perling"
+            ],
+            "body": "Debra Perlingiere\nEnron North America Corp.\nLegal Department\n1400 Smith Street, EB 3885\nHouston, Texas 77002\ndperlin@enron.com\nPhone 713-853-7658\nFax  713-646-3490\n\n----- Forwarded by Debra Perlingiere/HOU/ECT on 05/30/2001 03:39 PM -----\n\n\tJudy Thorne/ENRON@enronXgate\n\t05/30/2001 08:52 AM\n\t\t \n\t\t To: wkhu@dynegy.com@SMTP@enronXgate\n\t\t cc: Debra Perlingiere/HOU/ECT@ECT, Judy Thorne/ENRON@enronXgate\n\t\t Subject: GISB\n\nKent,\n\nPer our discussion,  I am forwarding for your review the attached sample of \nEnron Upstream Company, LLC's GISB.   Please do not hesitate to give me a \ncall with any questions you may have regarding the enclosed.\n\n\nThanks,\nJudy Thorne\nENA Upstream Company LLC",
+            "category": 0,
+            "date_sent": "Wed, 30 May 2001 08:39:00 -0700 (PDT)",
+            "events": [
+                "give"
+            ],
+            "id": 72,
+            "receiver": "majed.nachawati@enron.com",
+            "relationships": [
+                {
+                    "action": "related to",
+                    "source": "De",
+                    "target": "##bra Perlingier"
+                },
+                {
+                    "action": "related to",
+                    "source": "De",
+                    "target": "Enron North America Corp"
+                },
+                {
+                    "action": "related to",
+                    "source": "De",
+                    "target": "Department"
+                }
+            ],
+            "sender": "debra.perlingiere@enron.com",
+            "sim_score": 0.6951095461845398,
+            "subject": "GISB",
+            "summary": "Enron North America Corp. was founded in 1984. The company is based in Houston, Texas. For confidential support call the Samaritans on 08457 90 90 90, visit a local Samaritans branch or see www.samaritans.org."
+        },
+        {
+            "actors": [
+                "Jeff Dasovich",
+                "Nov",
+                "Mary Hai",
+                "Susan J Mara",
+                "John N",
+                "m",
+                "Sandra McCub",
+                "Guerrero",
+                "Richard B Sanders",
+                "Robert Badeer",
+                "Scott Goven",
+                "Joe Hart",
+                "Harry Kingers",
+                "Karen Den",
+                "Jane",
+                "Richard Shapiro",
+                "Tim Bel",
+                "Christopher F",
+                "Christian Yo",
+                "Paul Kaufman",
+                "James",
+                "St",
+                "Jeff Davis",
+                "Linda Robertson",
+                "Tom Briggs"
+            ],
+            "body": "30 days is hardly long-term.... i think we should call him on it.\n\n\nFrom: Jeff Dasovich on 03/05/2001 04:34 PM\nSent by: Jeff Dasovich\nTo: Karen Denne/Corp/Enron@ENRON, Susan J Mara/NA/Enron@ENRON, Sandra \nMcCubbin/NA/Enron@Enron, mpalmer@enron.com, Christopher F Calger/PDX/ECT@ECT, \nTim Belden/HOU/ECT@ECT, Robert Badeer/HOU/ECT@ECT, Mary Hain/HOU/ECT@ECT, Joe \nHartsoe/Corp/Enron@ENRON, Linda Robertson/NA/Enron@ENRON, Sarah \nNovosel/Corp/Enron@ENRON, Tom Briggs/NA/Enron@Enron, John \nNeslage/ENRON_DEVELOPMENT@ENRON_DEVELOPMENT, James D Steffes/NA/Enron@Enron, \nRichard Shapiro/NA/Enron@Enron, skean@enron.com, Paul Kaufman/PDX/ECT@ECT, \nMDay@GMSSR.com, Scott Govenar <sgovenar@govadv.com>, Harry \nKingerski/NA/Enron@Enron, Richard B Sanders/HOU/ECT@ECT, Christian \nYoder/HOU/ECT@ECT, Janel Guerrero/Corp/Enron@Enron\ncc:  \n\nSubject: Davis announces first round of long-term power contracts \n\nFYI--Davis includes us as one of the companies he signed up. I'm only aware \nof a 30-day deal with an option to extend for 5 years (option ends toward the \nend of the month, as I understand it). Not aware of any other deals we've \ndone with DWR at this time, though others are on the table----DWR's \ncreditworthiness remains an issue.\nBest,\nJeff\n\nDavis announces first round of long-term power contracts \nDON THOMPSON, Associated Press Writer\nMonday, March 5, 2001 \n,2001 Associated Press \n(03-05) 12:31 PST SACRAMENTO (AP) -- The state has reached 40 long-sought \nlong-term contracts and other agreements to keep power flowing to customers \nof two financially ailing utilities, Gov. Gray Davis announced Monday. \nThe deals will supply an average of nearly 8,900 megawatts per year for \nSouthern California Edison and Pacific Gas and Electric Co. customers over \nthe next 10 years and let the state buy power for far less than it has been \npaying on the costly spot market, Davis said in a written statement. \nOne megawatt is enough power for about 1,000 households. \nFor the first five years, the contracts provide power at an average price of \n$79 per megawatt hour, about 75 percent below recent costs on the spot \nelectricity market, Davis said. \nThe price drops to an average of $61 per megawatt hour, about 80 percent \nbelow spot prices, he said. \n``These agreements are the bedrock of a long-term energy solution,'' Davis \nsaid in remarks prepared for delivery Monday afternoon in Los Angeles. ``The \nprovide reliability at a reasonable price.'' \nSome of the contract negotiations will result in accelerated power plant \nconstruction, adding an estimated 5,000 megawatts to the state grid within \nthe next two years, some by this summer, Davis said. \nThe contracts amount to 75 percent of the long-term deals the Davis \nadministration has sought under a new law that lets the state spend an \nestimated $10 billion over a decade to buy power for Edison and PG&E \ncustomers. \nDavis has pitched such contracts as one way to lift California out of its \nenergy crisis. Negotiations have taken longer than expected, however, as his \nadministration and power providers haggled over how much the state should \npay. \nThe Davis administration wants to stop paying for power on the expensive spot \nmarket, where desperation to keep the lights on leads to inflated prices. \nOn Friday, the state released another $500 million to continue making such \npurchases on behalf of the state's two big cash-strapped utilities, bringing \nits spending so far to some $3.2 billion since early January. \nThe agreements announced Monday include more than 20 power suppliers, \nincluding electricity giants Duke Energy, Calpine, Dynegy, Enron and Reliant. \nDavis declined to release details on individual contracts. \nDuke Energy said it has reached a $4 billion, nine-year agreement to sell \nelectricity to the state. \nThe memorandum of understanding calls for Duke to provide 550 megawatts \nstarting next Jan. 1. That's enough power for roughly 550,000 households. \nThat amount would rise to 800 megawatts Jan. 1, 2003, enough electricity for \nthe equivalent of 800,000 households. The contract would continue through \n2010. \n``We believe long-term contracts provide the critical underpinning for a \nstable electricity market and are happy the state is moving in that \ndirection,'' Bill Hall, head of Duke's California operations, said in a \nwritten statement. \nThe state is buying about one-third of the power used by the customers of \nEdison and PG&E. Both have been denied credit by suppliers who fear the \nfinancially troubled utilities won't pay for the power. \nCalifornia plans to recover those costs by issuing $10 billion in revenue \nbonds in May, with the rest of that money going to finance the cheaper, \nlong-term power contracts. \nIn addition to the long-term contracts, the Department of Water Resources has \nreached 11 agreements letting it buy a substantial amount of power on the \nday-ahead market, cutting the state's payment of premium prices on the \nreal-time market, Davis said. \nA Stage 1 power alert was called Monday morning with reserves threatening to \ndrop to 7 percent due to power plant maintenance and low electricity imports, \nsaid Patrick Dorinson, spokesman for the Independent System Operator. The ISO \nmanages the state's power grid.",
+            "category": 2,
+            "date_sent": "Mon, 5 Mar 2001 08:34:00 -0800 (PST)",
+            "events": [
+                "extend",
+                "keep",
+                "customers"
+            ],
+            "id": 115,
+            "receiver": "jeff.dasovich@enron.com",
+            "relationships": [
+                {
+                    "action": "related to",
+                    "source": "Jeff Dasovich",
+                    "target": "Jeff Dasovich"
+                },
+                {
+                    "action": "related to",
+                    "source": "Jeff Dasovich",
+                    "target": "Karen Den"
+                },
+                {
+                    "action": "related to",
+                    "source": "Jeff Dasovich",
+                    "target": "##ne"
+                }
+            ],
+            "sender": "karen.denne@enron.com",
+            "sim_score": 0.6584345102310181,
+            "subject": "Re: Davis announces first round of long-term power contracts",
+            "summary": "Gov. Gray Davis announces first round of long-term power contracts. The deals will supply an average of nearly 8,900 megawatts per year for Edison and PG&E customers. The contracts provide power at an average price of about 75 percent below spot prices."
+        },
+        {
+            "actors": [
+                "Anastasia Aour",
+                "Kenneth Lay"
+            ],
+            "body": "Hello Mr. Kenneth Lay,\n\nI hope you don't mind an email from someone who is not very high\nin the decision-making level of Enron but I have such strong need \nto share my thoughts and visions with you.\n\nFirst, I am so happy that we are not going to be acquired by Dynegy.\nEnron is an entity that deserves to live on.  \n\nSecond, I have a vision that we (Enron) become a \"Wiser & Quieter\" Enron.\n\nI wish I can do something to help raise the \"millions/billions\" of dollars needed\nto survive in the shortrun, but all I can do is continue working on my project\nas I have done before....\n\nI personally do not mind the company shrinking to a very modest level\nin the next 12-48 months, selling off core businesses, and adopting a more\ncautious role to ALL spending.  Even if we are layed-off we can always \ncome back in the future.\n\nThird, I just want to share an imagery of Enron being strong again in the future...\nNot with the previous ostentatiousness that prevailed in \"the old days\" but with \na newly developed sense of Wisdom and Maturity.  \n...And there will be articles in the Wall Street Journal about how the Enron giant \nhas slowly but consistently lifted itself out of the gutter to become a \n\"Wiser & Quieter Enron\".\n\nIf there is anything I can do to help you in this endeavor please let me know.\nI have no strong family obligations that prevent me from working long hours\non some additional short-term projects to help out my Enron.\n\nBest Wishes!\n\nAnastasia Aourik\nWeather Derivatives Pre-Trade Analytics\nEnron Net Works, L.L.C.\n713-345-4781",
+            "category": 0,
+            "date_sent": "Thu, 29 Nov 2001 08:05:26 -0800 (PST)",
+            "events": [
+                "share",
+                "be",
+                "live"
+            ],
+            "id": 144,
+            "receiver": "kenneth.lay@enron.com",
+            "relationships": [
+                {
+                    "action": "related to",
+                    "source": "Kenneth Lay",
+                    "target": "Enron"
+                },
+                {
+                    "action": "related to",
+                    "source": "Kenneth Lay",
+                    "target": "Dynegy"
+                },
+                {
+                    "action": "related to",
+                    "source": "Kenneth Lay",
+                    "target": "Enron"
+                }
+            ],
+            "sender": "anastasia.aourik@enron.com",
+            "sim_score": 0.6390981674194336,
+            "subject": "I Am Happy!!!",
+            "summary": "Anastasia Aourik wrote to Kenneth Lay, CEO of Enron. She wanted to help raise the \"millions/billions\" of dollars needed to survive in the shortrun."
+        },
+        {
+            "actors": [
+                "McMahon"
+            ],
+            "body": "Here are my notes from today's call.  As with Monday, I've focused on getting them out as quickly as possible rather than taking extra time to re-organize them by subject.\n\nEnron's business has been grouped into three buckets:  Core, Non-core, and Under Review.  \nCore:  Wholesale energy business in North America and Europe, retail energy, pipelines\nNon-core:  Broadband, water, and international assets (i.e. EGAS).  Enron has approx. $8Bn in investments in these assets, and they have produced 'dismal' returns.  Enron will be exiting these businesses and will attempt to wind them up in an orderly fashion.  An aggressive divestiture program has been set in motion for these assets.  \nUnder Review:  EGM, EIM.  These businesses are being closely examined to determine whether they have a reasonable chance of long-term viability.  Required resource levels are being carefully studied.  Following review, Enron will move the different portions of these businesses to core or non-core as the analysis dictates.  \nApproximately $800MM of asset sales are under contract and expected to close in the fourth quarter.  These include a gas LDC in Brazil, EcoElectrica, and our Indian E&P assets.  \nEnron is in active pursuit of an additional private equity infusion of $500MM-1Bn.  Given the current environment, raising equity in the public markets would be 'inefficient', McMahon says.\nShort-term liquidity is provided by the $3Bn of credit drawn upon a few weeks ago, the $1Bn of new debt, and the $1.5Bn equity infusion from Dynegy.  Longer-term, the proceeds from the sale of PGE will provide liquidity.  Asset sales over the next year will be used to pay down debt.\nMcMahon described the major off-balance-sheet vehicles:\nMarlin was set up to hold Azurix assets.  It was initially capitalized with $950MM of 144a debt and $125MM of equity (raised from Enron and institutional investors).  The debt is supported by the equity and by Azurix' assets.  Enron is obligated to cover any deficit at the time the debt becomes due on 3/17/03 (the 'Enron topup' obligation).  The 3/17/03 date is accelerated in the event that Enron is rated below-investment-grade by any one of the three major agencies.  The primary asset of Marlin is Wessex Water.  As long as Wessex is worth at least $2.6Bn, there will be no Enron topup required.  If we take a 25% haircut to present book value, Enron will have to provide $650MM in consideration upon retirement of the debt.  This $650MM would hit Enron cash, income, and equity balances.  \nOsprey contains energy-related assets and 'other assets'.  It was initially capitalized with $2.4Bn of 144a debt and $220MM in equity (ENE and institutionals).  As with Marlin, the entity is an asset-backed structure with an Enron topup guarantee. The debt is supported by a) the assets; b) $1Bn of convertible preferred ENE (convertible into 50MM shares of ENE common); and c) additional ENE common as needed for topup.  Assuming the same 25% hypothetical haircut to current book value, Enron would have to deliver approx. $600MM of topup funds--which would hit ENE cash, income, and equity.  The debt must be retired by 9/17/02, with the same cut-to-junk early trigger provision as Marlin.  \nYosemite and the Credit-Linked Notes are predominantly commodity transactions entered into with 'large financial institutions'.  The underlying transactions are already on Enron's balance sheet.  McMahon says that there is no Enron share obligation related to these instruments.\nDynegy has reviewed all of these vehicles, McMahon says.\nOur 10Q will be filed five days late.  The 10Q will include all of this detail regarding the off-balance-sheet vehicles.\nThe special committee investigation is still ongoing.  The committee meets 2-3 times/week, sometimes more often.  The outside auditors (D&T) and external counsel hired by the committee are working 'virtually 7 days a week'.  Lay estimates that it will take the committee several more weeks to complete its investigation.\nMcMahon says it's 'way too early to tell' if any asset writedowns are called for.  That analysis is underway, but it will not be complete for some time.  \nOsprey contains the European power projects (Trakya and Saarlux), some North American merchant investments, and some Brazilian assets.  \nUnder the merger agreement, Enron cannot dispose of assets representing more than 15% of the balance sheet without Dynegy approval.  However, an appendix to the agreement holds a list of assets that are specifically permitted to be sold without Dynegy approval.  \nBroadband is expected to be fully wound up 'sometime over the course of the next year'.  (Did not catch this part clearly).  \nThe ENE topup obligation for Marlin (represented by ENE common that would have to be delivered) will be converted into an obligation for an equivalent amount of DYN shares upon closing.  \n$1.9Bn of debt is carried at the Azurix level.  \nCurrent book value of the Osprey assets is $2.1Bn.  \nNo Dynegy outs other than the previously discussed general MAC clause and the $3.5Bn legal liability clause.  \nYosemite and the Credit-Linked notes are functionally equivalent to ENE senior unsecured debt (this section somewhat unclear).  The underlying transactions represented volumes of 'crude oil and gas'.  The transactions relate to the 'physical movement' of these commodities.  The swaps related to Yosemite and the CLNs would be financially settled.  \nWhalley was asked about the return of trading business to normal volumes.  He said that he cannot yet give an update on the progress of customers returning to our longer-term products.  Acknowledges that a few anxious customers put long-term deals on hold last week.  Says that our first focus is on getting our short-term business back up to normal levels.  It will be 'a couple of weeks' before we're able to give an update on the comfort levels of our customers regarding long-term deals with us.  \nMcMahon:  There hasn't been a major relaxation of credit requirements by our customers--credit requirements continue to follow strict contractual provisions as called for in our individual agreements with our various customers.  But 'we have seen a return of some of the transactions, some of the flows.'\nWhalley says that we're hoping to see a return to more normal trading levels late this week or early next week.\nLay says that cost cuts will be made across of all of our businesses.  The situation gives us an opportunity to review our entire cost structure, he says.  The cuts will certainly be deeper in our non-core businesses.  Whalley then quickly interjects (some might say interrrupts) with a clarification that there are no plans to reduce the size of our North American energy trading business.  We will be looking at, perhaps, streamlining some of our processes and making prudent adjustments, but there are no plans to reduce the size of the business.\nMcMahon:  \"The company is overlevered; that's a fact.\"--hence our pursuit of additional equity.\nMcMahon mentions that business was better at the start of this week than at the end of last week.\nENE had approx. $1Bn in cash as of 9/30, which McMahon points out would be unusual for us.  \n\nAs before, give me a call at 3-3055 if you'd like more color.\n\nPatrick Tucker",
+            "category": 0,
+            "date_sent": "Wed, 14 Nov 2001 09:44:01 -0800 (PST)",
+            "events": [
+                "re",
+                "wind",
+                "determine"
+            ],
+            "id": 109,
+            "receiver": "s..pollan@enron.com, lindsay.culotta@enron.com, e.murrell@enron.com,",
+            "relationships": [
+                {
+                    "action": "related to",
+                    "source": "Enron",
+                    "target": "North America"
+                },
+                {
+                    "action": "related to",
+                    "source": "Enron",
+                    "target": "Europe"
+                },
+                {
+                    "action": "related to",
+                    "source": "Enron",
+                    "target": "Enron"
+                }
+            ],
+            "sender": "patrick.tucker@enron.com",
+            "sim_score": 0.6371126174926758,
+            "subject": "Highlights from ENE Analyst Conference Call 11/14",
+            "summary": "Enron's business has been grouped into three buckets:  Core, Non-core, and Under Review. Enron has approx. $8Bn in investments in these assets, and they have produced 'dismal' returns."
+        },
+        {
+            "actors": [
+                "Cody",
+                "Mary Hai",
+                "Bob Gates",
+                "Alex Suga",
+                "Joe",
+                "Alan Com",
+                "Curtis",
+                "Bob Esca",
+                "Bill Woods",
+                "Ha",
+                "Joe Ha",
+                "Bill Carlson",
+                "Katie Kaplan",
+                "Sue Mara",
+                "Carolyn A Baker",
+                "Bob Elle",
+                "David",
+                "Hart",
+                "##p Boyd",
+                "Boyd"
+            ],
+            "body": "Hap -- Please discuss with Mary Hain, Sue Mara and Alan Comnes for their \nreview.  Also please call me -202.466.9150.  We should not sign on to these \nuntil we talk and have internal sign offs.  Thanks Joe\n\n\n\n\tHap Boyd\n\t03/20/2001 09:48 AM\n\t\t \n\t\t To: Joe Hartsoe/Corp/Enron@ENRON\n\t\t cc: \n\t\t Subject: FW: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report\n\nJoe,\nIf you have any comments, please let me know. Thanks.\nHap\n---------------------- Forwarded by Hap Boyd/EWC/Enron on 03/20/2001 08:00 AM \n---------------------------\n\n\n\"Katie Kaplan\" <kaplan@iepa.com> on 03/19/2001 09:14:47 PM\nTo: \"'Alex Sugaoka (E-mail)'\" <alex.sugaoka@uaecorp.com>, \"'Bill Carlson \n(E-mail)'\" <william_carlson@wastemanagement.com>, \"'Bill Woods (E-mail)'\" \n<billw@calpine.com>, \"'Bob Ellery (E-mail)'\" <bellery@spi-ind.com>, \"'Bob \nEscalante (E-mail)'\" <rescalante@riobravo-gm.com>, \"'Bob Gates (E-mail)'\" \n<bob.gates@enron.com>, \"'Carolyn A Baker (E-mail)'\" \n<cabaker@duke-energy.com>, \"'Cody Carter (E-mail)'\" \n<cody.carter@williams.com>, \"'Curt Hatton (E-mail)'\" \n<Curt.Hatton@gen.pge.com>, \"'Curtis Kebler (E-mail)'\" \n<curtis_l_kebler@reliantenergy.com>, \"'David Parquet'\" \n<david.parquet@enron.com>, \"'Dean Gosselin (E-mail)'\" \n<dean_gosselin@fpl.com>, \"'Doug Fernley (E-mail)'\" \n<fernley.doug@epenergy.com>, \"'Douglas Kerner (E-mail)'\" <dkk@eslawfirm.com>, \n\"'Duane Nelsen (E-mail)'\" <dnelsen@gwfpower.com>, \"'Ed Tomeo (E-mail)'\" \n<ed.tomeo@uaecorp.com>, \"'Eileen Koch (E-mail)'\" <eileenk@calpine.com>, \n\"'Eric Eisenman (E-mail)'\" <eric.eisenman@gen.pge.com>, \"'Frank DeRosa \n(E-mail)'\" <frank.derosa@gen.pge.com>, \"Frazier Blaylock (E-mail)\" \n<frazier_blaylock@ogden-energy.com>, \"'Greg Blue (E-mail)'\" \n<gtbl@dynegy.com>, \"'Hap Boyd (E-mail)'\" <Hap_Boyd@enron.com>, \"'Hawks Jack \n(E-mail)'\" <jack.hawks@gen.pge.com>, \"'Jack Pigott (E-mail)'\" \n<jackp@calpine.com>, \"'Jim Willey (E-mail)'\" <elliottsa@earthlink.net>, \"'Joe \nGreco (E-mail)'\" <jgreco@caithnessenergy.com>, \"'Joe Ronan (E-mail)'\" \n<joer@calpine.com>, \"'John Stout (E-mail)'\" <john_h_stout@reliantenergy.com>, \n\"'Jonathan Weisgall (E-mail)'\" <jweisgall@aol.com>, \"'Kate Castillo \n(E-mail)'\" <CCastillo@riobravo-gm.com>, \"'Kelly Lloyd (E-mail)'\" \n<kellyl@enxco.com>, \"'Ken Hoffman (E-mail)'\" <khoffman@caithnessenergy.com>, \n\"'Kent Fickett (E-mail)'\" <kfickett@usgen.com>, \"'Kent Palmerton'\" \n<kent.palmerton@williams.com>, \"'Lynn Lednicky (E-mail)'\" \n<lynn.a.lednicky@dynegy.com>, \"'Marty McFadden (E-mail)'\" \n<marty_mcfadden@ogden-energy.com>, \"'Paula Soos'\" \n<paula_soos@ogden-energy.com>, \"'Randy Hickok (E-mail)'\" \n<rjhickok@duke-energy.com>, \"Rick S. Koebbe (E-mail)\" \n<rskoebbe@powerworksinc.com>, \"'Rob Lamkin (E-mail)'\" \n<rllamkin@seiworldwide.com>, \"'Roger Pelote (E-mail)'\" \n<roger.pelote@williams.com>, \"'Ross Ain (E-mail)'\" <ain@worldnet.att.net>, \n\"'Stephanie Newell (E-mail)'\" <stephanie-newell@reliantenergy.com>, \"'Steve \nIliff'\" <siliff@riobravo-gm.com>, \"'Steve Ponder (E-mail)'\" \n<steve_ponder@fpl.com>, \"'Susan J Mara (E-mail)'\" <smara@enron.com>, \"'Tony \nWetzel (E-mail)'\" <twetzel@thermoecotek.com>, \"'William Hall (E-mail)'\" \n<wfhall2@duke-energy.com>, \"'Alex Makler (E-mail)'\" <alexm@calpine.com>, \"Bob \nSzymanski (E-mail)\" <rjszymanski@powerworksinc.com>, \"'D. Frank (E-mail)'\" \n<dfrank@seawestwindpower.com>, \"'David Dickey (E-mail)'\" \n<david.dickey@calenergy.com>, \"'Doug Levitt (E-mail)'\" <SDL@calwind.com>, \n\"'Ed Maddox (E-mail)'\" <emaddox@seawestwindpower.com>, \"'Eric Edstrom'\" \n<edstrome@epenergy.com>, \"'Jeff Dasovich (E-mail)'\" \n<Jeff.Dasovich@enron.com>, \"'Julie Simon (E-mail)'\" <jsimon@epsa.org>, \n\"'Lucian Fox (E-mail)'\" <lucian_fox@ogden-energy.com>, \"'Mark J. Smith'\" \n<mark_J_smith@fpl.com>, \"'Milton Schultz (E-mail)'\" <bfpjv@c-zone.net>, \"'Nam \nNguyen'\" <nam.nguyen@powersrc.com>, \"'Paul Wood (E-mail)'\" \n<paul_wood@ogden-energy.com>, \"'Pete Levitt (E-mail)'\" <Pete@calwind.com>, \n\"'Rich Dyer (E-mail)'\" <rich_dyer@ogden-energy.com>, \"'Robert Frees \n(E-mail)'\" <freesrj@apci.com>, \"'Scott Harlan'\" <harlans@epenergy.com>, \"'Ted \nCortopassi (E-mail)'\" <ted_cortopassi@ogden-energy.com>, \"'Thomas Heller \n(E-mail)'\" <hellertj@apci.com>, \"'Tom Hartman'\" <tom_hartman@fpl.com>, \"'Ward \nScobee (E-mail)'\" <wscobee@caithnessenergy.com>\ncc: \"Andy Brown (E-mail)\" <ABB@eslawfirm.com> \n\nSubject: FW: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report\n\n\nGreetings:\nThis is the subject of tomorrow's ISO/FERC call.  We will also be discussing\nthe ISO Market Repair Team and Stabilization Plan, and the New Facility\nInterconnection Tariff language.   Please let me know if there are any other\nissues you would like to address.\n\nKatie Kaplan\nManager of State Policy Affairs\nIndependent Energy Producers Association\n(916) 448-9499\n\n-----Original Message-----\nFrom: andy brown [mailto:andybrwn@earthlink.net]\nSent: Monday, March 19, 2001 5:36 PM\nTo: Katie Kaplan\nCc: 'Alex Sugaoka (E-mail)'; 'Bill Carlson (E-mail)'; 'Bill Woods (E-mail)';\n'Bob Ellery (E-mail)'; 'Bob Escalante (E-mail)'; 'Bob Gates (E-mail)';\n'Carolyn A Baker (E-mail)'; 'Cody Carter (E-mail)'; 'Curt Hatton (E-mail)';\n'Curtis Kebler (E-mail)'; 'David Parquet'; 'Dean Gosselin (E-mail)'; 'Doug\nFernley (E-mail)'; 'Douglas Kerner (E-mail)'; 'Duane Nelsen (E-mail)'; 'Ed\nTomeo (E-mail)'; 'Eileen Koch (E-mail)'; 'Eric Eisenman (E-mail)'; 'Frank\nDeRosa (E-mail)'; Frazier Blaylock (E-mail); 'Greg Blue (E-mail)'; 'Hap Boyd\n(E-mail)'; 'Hawks Jack (E-mail)'; 'Jack Pigott (E-mail)'; 'Jim Willey\n(E-mail)'; 'Joe Greco (E-mail)'; 'Joe Ronan (E-mail)'; 'John Stout\n(E-mail)'; 'Jonathan Weisgall (E-mail)'; 'Kate Castillo (E-mail)'; 'Kelly\nLloyd (E-mail)'; 'Ken Hoffman (E-mail)'; 'Kent Fickett (E-mail)'; 'Kent\nPalmerton'; 'Lynn Lednicky (E-mail)'; 'Marty McFadden (E-mail)'; 'Paula\nSoos'; 'Randy Hickok (E-mail)'; Rick S. Koebbe (E-mail); 'Rob Lamkin\n(E-mail)'; 'Roger Pelote (E-mail)'; 'Ross Ain (E-mail)'; 'Stephanie Newell\n(E-mail)'; 'Steve Iliff'; 'Steve Ponder (E-mail)'; 'Susan J Mara (E-mail)';\n'Tony Wetzel (E-mail)'; 'William Hall (E-mail)'; 'Alex Makler (E-mail)'; Bob\nSzymanski (E-mail); 'D. Frank (E-mail)'; 'David Dickey (E-mail)'; 'Doug\nLevitt (E-mail)'; 'Ed Maddox (E-mail)'; 'Eric Edstrom'; 'Jeff Dasovich\n(E-mail)'; 'Julie Simon (E-mail)'; 'Lucian Fox (E-mail)'; 'Mark J. Smith';\n'Milton Schultz (E-mail)'; 'Nam Nguyen'; 'Paul Wood (E-mail)'; 'Pete Levitt\n(E-mail)'; 'Rich Dyer (E-mail)'; 'Robert Frees (E-mail)'; 'Scott Harlan';\n'Ted Cortopassi (E-mail)'; 'Thomas Heller (E-mail)'; 'Tom Hartman'; 'Ward\nScobee (E-mail)'; Carol H Hudson (E-mail); Steven Kelly (E-mail); Andy Brown\n(E-mail); Bob Weisenmiller (E-mail); Jan Smutny-Jones (E-mail);\njmpa@dynegy.com; runwithmee@aol.com\nSubject: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report\nImportance: High\n\nAttached in Word format are the draft IEP comments, due to be filed on the\n22nd, regarding the FERC Staff Report on market monitoring and market power\nmitigation.  This is my suggested approach, which is obviously subject to\nchange per our discussion during the call tomorrow.\n\nI would like to highlight that the draft characterizes the approach as a\n\"circuit breaker\" during periods of highest demand and suggests that this is\ndistinct from notions of market power abuse.  Other entities are arguing\nthat during the highest demand, when it exceeds available supplies, all\nsuppliers have and are \"exercising\" (as distinct from abusing?) market\npower.  The draft attempts to highlight the current regional supply context\ncharacterized by the drought as a rationale for the \"emergency circuit\nbreaker.\"\n\nAs mentioned in Katie Kaplan's email this morning, if your company has a\ndraft of comments, we would appreciate an opportunity to look at them to\navoid substantive conflicts.\n\nI trust this is the right distribution list but I was not able to use the\nlist from this morning's email because of computer problems at my end.  ABB\n\n--\nAndrew Brown\nSacramento, CA\nabb@eslawfirm.com\n\n - DRAFT_010318_el00-95-012_IEP_Cmts_Staff_Rpt.doc",
+            "category": 1,
+            "date_sent": "Tue, 20 Mar 2001 02:35:00 -0800 (PST)",
+            "events": [
+                "these",
+                "address",
+                "be"
+            ],
+            "id": 152,
+            "receiver": "hap.boyd@enron.com",
+            "relationships": [
+                {
+                    "action": "related to",
+                    "source": "Mary Hai",
+                    "target": "Sue Mara"
+                },
+                {
+                    "action": "related to",
+                    "source": "Mary Hai",
+                    "target": "Alan Com"
+                },
+                {
+                    "action": "related to",
+                    "source": "Mary Hai",
+                    "target": "Joe Ha"
+                }
+            ],
+            "sender": "joe.hartsoe@enron.com",
+            "sim_score": 0.6044579148292542,
+            "subject": "Re: FW: IEP FERC/ISO: Draft IEP FERC Cmts on Staff Report",
+            "summary": "Hap -- Please discuss with Mary Hain, Sue Mara and Alan Comnes. We should not sign on to these                 until we talk and have internal sign offs. Thanks."
+        }
+    ],
+    "stories": [
+        {
+            "actors": [
+                "##bra Perling",
+                "##bra Perlingier",
+                "De",
+                "Judy",
+                "Judy Thorne"
+            ],
+            "content": "Enron North America Corp., a company founded in 1984 and headquartered in Houston, Texas, emerged as a significant entity in the energy sector.",
+            "emails": [
+                {
+                    "actors": [
+                        "Judy",
+                        "Judy Thorne",
+                        "##bra Perlingier",
+                        "De",
+                        "##bra Perling"
+                    ],
+                    "body": "Debra Perlingiere\nEnron North America Corp.\nLegal Department\n1400 Smith Street, EB 3885\nHouston, Texas 77002\ndperlin@enron.com\nPhone 713-853-7658\nFax  713-646-3490\n\n----- Forwarded by Debra Perlingiere/HOU/ECT on 05/30/2001 03:39 PM -----\n\n\tJudy Thorne/ENRON@enronXgate\n\t05/30/2001 08:52 AM\n\t\t \n\t\t To: wkhu@dynegy.com@SMTP@enronXgate\n\t\t cc: Debra Perlingiere/HOU/ECT@ECT, Judy Thorne/ENRON@enronXgate\n\t\t Subject: GISB\n\nKent,\n\nPer our discussion,  I am forwarding for your review the attached sample of \nEnron Upstream Company, LLC's GISB.   Please do not hesitate to give me a \ncall with any questions you may have regarding the enclosed.\n\n\nThanks,\nJudy Thorne\nENA Upstream Company LLC",
+                    "category": 0,
+                    "date_sent": "Wed, 30 May 2001 08:39:00 -0700 (PDT)",
+                    "events": [
+                        "give"
+                    ],
+                    "id": 72,
+                    "receiver": "majed.nachawati@enron.com",
+                    "relationships": [
+                        {
+                            "action": "related to",
+                            "source": "De",
+                            "target": "##bra Perlingier"
+                        },
+                        {
+                            "action": "related to",
+                            "source": "De",
+                            "target": "Enron North America Corp"
+                        },
+                        {
+                            "action": "related to",
+                            "source": "De",
+                            "target": "Department"
+                        }
+                    ],
+                    "sender": "debra.perlingiere@enron.com",
+                    "sim_score": 0.6951095461845398,
+                    "subject": "GISB",
+                    "summary": "Enron North America Corp. was founded in 1984. The company is based in Houston, Texas. For confidential support call the Samaritans on 08457 90 90 90, visit a local Samaritans branch or see www.samaritans.org."
+                }
+            ],
+            "title": "Enron Corporation: A Brief Overview"
+        },
+        {
+            "actors": [
+                "Anastasia Aourik",
+                "Kenneth Lay"
+            ],
+            "content": "Amidst Enron's escalating financial crisis, Anastasia Aourik reached out directly to then-CEO Kenneth Lay, offering to assist the embattled energy giant in securing the \"millions/billions\" of dollars critically needed for its immediate short-term survival. Her communication underscored the company's precarious financial position and the desperate search for capital to avert collapse.",
+            "emails": [
+                {
+                    "actors": [
+                        "Anastasia Aour",
+                        "Kenneth Lay"
+                    ],
+                    "body": "Hello Mr. Kenneth Lay,\n\nI hope you don't mind an email from someone who is not very high\nin the decision-making level of Enron but I have such strong need \nto share my thoughts and visions with you.\n\nFirst, I am so happy that we are not going to be acquired by Dynegy.\nEnron is an entity that deserves to live on.  \n\nSecond, I have a vision that we (Enron) become a \"Wiser & Quieter\" Enron.\n\nI wish I can do something to help raise the \"millions/billions\" of dollars needed\nto survive in the shortrun, but all I can do is continue working on my project\nas I have done before....\n\nI personally do not mind the company shrinking to a very modest level\nin the next 12-48 months, selling off core businesses, and adopting a more\ncautious role to ALL spending.  Even if we are layed-off we can always \ncome back in the future.\n\nThird, I just want to share an imagery of Enron being strong again in the future...\nNot with the previous ostentatiousness that prevailed in \"the old days\" but with \na newly developed sense of Wisdom and Maturity.  \n...And there will be articles in the Wall Street Journal about how the Enron giant \nhas slowly but consistently lifted itself out of the gutter to become a \n\"Wiser & Quieter Enron\".\n\nIf there is anything I can do to help you in this endeavor please let me know.\nI have no strong family obligations that prevent me from working long hours\non some additional short-term projects to help out my Enron.\n\nBest Wishes!\n\nAnastasia Aourik\nWeather Derivatives Pre-Trade Analytics\nEnron Net Works, L.L.C.\n713-345-4781",
+                    "category": 0,
+                    "date_sent": "Thu, 29 Nov 2001 08:05:26 -0800 (PST)",
+                    "events": [
+                        "share",
+                        "be",
+                        "live"
+                    ],
+                    "id": 144,
+                    "receiver": "kenneth.lay@enron.com",
+                    "relationships": [
+                        {
+                            "action": "related to",
+                            "source": "Kenneth Lay",
+                            "target": "Enron"
+                        },
+                        {
+                            "action": "related to",
+                            "source": "Kenneth Lay",
+                            "target": "Dynegy"
+                        },
+                        {
+                            "action": "related to",
+                            "source": "Kenneth Lay",
+                            "target": "Enron"
+                        }
+                    ],
+                    "sender": "anastasia.aourik@enron.com",
+                    "sim_score": 0.6390981674194336,
+                    "subject": "I Am Happy!!!",
+                    "summary": "Anastasia Aourik wrote to Kenneth Lay, CEO of Enron. She wanted to help raise the \"millions/billions\" of dollars needed to survive in the shortrun."
+                }
+            ],
+            "title": "Enron's Desperate Hour: An Offer of Financial Lifeline"
+        },
+        {
+            "actors": [
+                "McMahon"
+            ],
+            "content": "A recent internal assessment of Enron's extensive business portfolio, reportedly involving key personnel such as McMahon, has categorized the company's approximately $8 billion in investments into three distinct segments: Core, Non-core, and Under Review. This strategic grouping has, however, highlighted a significant concern: these substantial assets have collectively yielded 'dismal' returns, prompting questions about the efficacy of Enron's investment strategies and the future viability of these diverse holdings.",
+            "emails": [
+                {
+                    "actors": [
+                        "McMahon"
+                    ],
+                    "body": "Here are my notes from today's call.  As with Monday, I've focused on getting them out as quickly as possible rather than taking extra time to re-organize them by subject.\n\nEnron's business has been grouped into three buckets:  Core, Non-core, and Under Review.  \nCore:  Wholesale energy business in North America and Europe, retail energy, pipelines\nNon-core:  Broadband, water, and international assets (i.e. EGAS).  Enron has approx. $8Bn in investments in these assets, and they have produced 'dismal' returns.  Enron will be exiting these businesses and will attempt to wind them up in an orderly fashion.  An aggressive divestiture program has been set in motion for these assets.  \nUnder Review:  EGM, EIM.  These businesses are being closely examined to determine whether they have a reasonable chance of long-term viability.  Required resource levels are being carefully studied.  Following review, Enron will move the different portions of these businesses to core or non-core as the analysis dictates.  \nApproximately $800MM of asset sales are under contract and expected to close in the fourth quarter.  These include a gas LDC in Brazil, EcoElectrica, and our Indian E&P assets.  \nEnron is in active pursuit of an additional private equity infusion of $500MM-1Bn.  Given the current environment, raising equity in the public markets would be 'inefficient', McMahon says.\nShort-term liquidity is provided by the $3Bn of credit drawn upon a few weeks ago, the $1Bn of new debt, and the $1.5Bn equity infusion from Dynegy.  Longer-term, the proceeds from the sale of PGE will provide liquidity.  Asset sales over the next year will be used to pay down debt.\nMcMahon described the major off-balance-sheet vehicles:\nMarlin was set up to hold Azurix assets.  It was initially capitalized with $950MM of 144a debt and $125MM of equity (raised from Enron and institutional investors).  The debt is supported by the equity and by Azurix' assets.  Enron is obligated to cover any deficit at the time the debt becomes due on 3/17/03 (the 'Enron topup' obligation).  The 3/17/03 date is accelerated in the event that Enron is rated below-investment-grade by any one of the three major agencies.  The primary asset of Marlin is Wessex Water.  As long as Wessex is worth at least $2.6Bn, there will be no Enron topup required.  If we take a 25% haircut to present book value, Enron will have to provide $650MM in consideration upon retirement of the debt.  This $650MM would hit Enron cash, income, and equity balances.  \nOsprey contains energy-related assets and 'other assets'.  It was initially capitalized with $2.4Bn of 144a debt and $220MM in equity (ENE and institutionals).  As with Marlin, the entity is an asset-backed structure with an Enron topup guarantee. The debt is supported by a) the assets; b) $1Bn of convertible preferred ENE (convertible into 50MM shares of ENE common); and c) additional ENE common as needed for topup.  Assuming the same 25% hypothetical haircut to current book value, Enron would have to deliver approx. $600MM of topup funds--which would hit ENE cash, income, and equity.  The debt must be retired by 9/17/02, with the same cut-to-junk early trigger provision as Marlin.  \nYosemite and the Credit-Linked Notes are predominantly commodity transactions entered into with 'large financial institutions'.  The underlying transactions are already on Enron's balance sheet.  McMahon says that there is no Enron share obligation related to these instruments.\nDynegy has reviewed all of these vehicles, McMahon says.\nOur 10Q will be filed five days late.  The 10Q will include all of this detail regarding the off-balance-sheet vehicles.\nThe special committee investigation is still ongoing.  The committee meets 2-3 times/week, sometimes more often.  The outside auditors (D&T) and external counsel hired by the committee are working 'virtually 7 days a week'.  Lay estimates that it will take the committee several more weeks to complete its investigation.\nMcMahon says it's 'way too early to tell' if any asset writedowns are called for.  That analysis is underway, but it will not be complete for some time.  \nOsprey contains the European power projects (Trakya and Saarlux), some North American merchant investments, and some Brazilian assets.  \nUnder the merger agreement, Enron cannot dispose of assets representing more than 15% of the balance sheet without Dynegy approval.  However, an appendix to the agreement holds a list of assets that are specifically permitted to be sold without Dynegy approval.  \nBroadband is expected to be fully wound up 'sometime over the course of the next year'.  (Did not catch this part clearly).  \nThe ENE topup obligation for Marlin (represented by ENE common that would have to be delivered) will be converted into an obligation for an equivalent amount of DYN shares upon closing.  \n$1.9Bn of debt is carried at the Azurix level.  \nCurrent book value of the Osprey assets is $2.1Bn.  \nNo Dynegy outs other than the previously discussed general MAC clause and the $3.5Bn legal liability clause.  \nYosemite and the Credit-Linked notes are functionally equivalent to ENE senior unsecured debt (this section somewhat unclear).  The underlying transactions represented volumes of 'crude oil and gas'.  The transactions relate to the 'physical movement' of these commodities.  The swaps related to Yosemite and the CLNs would be financially settled.  \nWhalley was asked about the return of trading business to normal volumes.  He said that he cannot yet give an update on the progress of customers returning to our longer-term products.  Acknowledges that a few anxious customers put long-term deals on hold last week.  Says that our first focus is on getting our short-term business back up to normal levels.  It will be 'a couple of weeks' before we're able to give an update on the comfort levels of our customers regarding long-term deals with us.  \nMcMahon:  There hasn't been a major relaxation of credit requirements by our customers--credit requirements continue to follow strict contractual provisions as called for in our individual agreements with our various customers.  But 'we have seen a return of some of the transactions, some of the flows.'\nWhalley says that we're hoping to see a return to more normal trading levels late this week or early next week.\nLay says that cost cuts will be made across of all of our businesses.  The situation gives us an opportunity to review our entire cost structure, he says.  The cuts will certainly be deeper in our non-core businesses.  Whalley then quickly interjects (some might say interrrupts) with a clarification that there are no plans to reduce the size of our North American energy trading business.  We will be looking at, perhaps, streamlining some of our processes and making prudent adjustments, but there are no plans to reduce the size of the business.\nMcMahon:  \"The company is overlevered; that's a fact.\"--hence our pursuit of additional equity.\nMcMahon mentions that business was better at the start of this week than at the end of last week.\nENE had approx. $1Bn in cash as of 9/30, which McMahon points out would be unusual for us.  \n\nAs before, give me a call at 3-3055 if you'd like more color.\n\nPatrick Tucker",
+                    "category": 0,
+                    "date_sent": "Wed, 14 Nov 2001 09:44:01 -0800 (PST)",
+                    "events": [
+                        "re",
+                        "wind",
+                        "determine"
+                    ],
+                    "id": 109,
+                    "receiver": "s..pollan@enron.com, lindsay.culotta@enron.com, e.murrell@enron.com,",
+                    "relationships": [
+                        {
+                            "action": "related to",
+                            "source": "Enron",
+                            "target": "North America"
+                        },
+                        {
+                            "action": "related to",
+                            "source": "Enron",
+                            "target": "Europe"
+                        },
+                        {
+                            "action": "related to",
+                            "source": "Enron",
+                            "target": "Enron"
+                        }
+                    ],
+                    "sender": "patrick.tucker@enron.com",
+                    "sim_score": 0.6371126174926758,
+                    "subject": "Highlights from ENE Analyst Conference Call 11/14",
+                    "summary": "Enron's business has been grouped into three buckets:  Core, Non-core, and Under Review. Enron has approx. $8Bn in investments in these assets, and they have produced 'dismal' returns."
+                }
+            ],
+            "title": "Enron's $8 Billion Portfolio Under Scrutiny Amid 'Dismal' Returns"
+        }
+    ]
 }
-
-def _fast_summarize(text, max_sentences=3):
-    """Simple extractive: take the first N sentences."""
-    sentences = re.split(r'(?<=[\.!?])\s+', text.strip())
-    return ' '.join(sentences[:max_sentences])
-
-def _ensure_fts_index():
-    """
-    Rebuild an FTS4 index that covers subject, body, sender, and receiver.
-    """
-    conn = sqlite3.connect(DB_PATH)
-    cur  = conn.cursor()
-
-    cur.execute("DROP TABLE IF EXISTS email_fts;")
-    cur.execute("""
-      CREATE VIRTUAL TABLE email_fts
-      USING fts4(
-        subject,
-        body,
-        content='emails'
-      );
-    """)
-    # cur.execute("""
-    #   CREATE VIRTUAL TABLE email_fts
-    #   USING fts4(
-    #     subject,
-    #     body,
-    #     sender,
-    #     receiver,
-    #     content='emails'
-    #   );
-    # """)
-    cur.execute("""
-      INSERT INTO email_fts(rowid, subject, body)
-      SELECT id, subject, body
-        FROM emails;
-    """)
-    # cur.execute("""
-    #   INSERT INTO email_fts(rowid, subject, body, sender, receiver)
-    #   SELECT id, subject, body, sender, receiver
-    #     FROM emails;
-    # """)
-    conn.commit()
-    conn.close()
-
-def _load_corpus_embeddings():
-    """
-    Load id, sender, receiver, subject, body for all emails once,
-    then compute their embeddings.
-    """
-    if _ALL['ids'] is not None:
-        return
-
-    conn           = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    cur            = conn.cursor()
-    cur.execute("SELECT id, subject, body FROM emails;")
-    # cur.execute("SELECT id, sender, receiver, subject, body FROM emails;")
-    rows           = cur.fetchall()
-    conn.close()
-
-    _ALL['ids']       = [r['id']       for r in rows]
-    # _ALL['senders']   = [r['sender']   for r in rows]
-    # _ALL['receivers'] = [r['receiver'] for r in rows]
-    _ALL['subjects']  = [r['subject']  for r in rows]
-    _ALL['bodies']    = [r['body']     for r in rows]
-
-    print(f"Embedding {_ALL['ids'].__len__()} emails…")
-    _ALL['embeddings'] = _embedder.encode(_ALL['bodies'], show_progress_bar=True)
-
-def _fts_search(query):
-    """
-    Lexical search (AND between terms) over subject, body, sender, receiver.
-    """
-    terms = [t for t in query.strip().split() if t]
-    fts_q = ' AND '.join(terms) if len(terms) > 1 else terms[0]
-
-    conn           = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    cur            = conn.cursor()
-    cur.execute("""
-      SELECT e.id, e.subject, e.body
-        FROM email_fts
-        JOIN emails e ON e.id = email_fts.rowid
-       WHERE email_fts MATCH ?
-       LIMIT ?
-    """, (fts_q, LEX_LIMIT))
-    # cur.execute("""
-    #   SELECT e.id, e.sender, e.receiver, e.subject, e.body
-    #     FROM email_fts
-    #     JOIN emails e ON e.id = email_fts.rowid
-    #    WHERE email_fts MATCH ?
-    #    LIMIT ?
-    # """, (fts_q, LEX_LIMIT))
-    rows = cur.fetchall()
-    conn.close()
-
-    return [dict(r) for r in rows]
-
-def _semantic_search(query):
-    """
-    Semantic search via cosine similarity over precomputed embeddings.
-    """
-    _load_corpus_embeddings()
-
-    qv   = _embedder.encode([query])[0].astype('float32')
-    mats = np.dot(_ALL['embeddings'], qv) / (
-        np.linalg.norm(_ALL['embeddings'], axis=1) * np.linalg.norm(qv)
-    )
-    top_idx = np.argsort(mats)[::-1][:SEM_LIMIT]
-
-    results = []
-    for i in top_idx:
-        results.append({
-            'id':        _ALL['ids'][i],
-            # 'sender':    _ALL['senders'][i],
-            # 'receiver':  _ALL['receivers'][i],
-            'subject':   _ALL['subjects'][i],
-            'body':      _ALL['bodies'][i],
-            'sim_score': float(mats[i])
-        })
-    return results
-
-def _summarize_and_categorize(results):
-    """
-    1) Extractive summary
-    2) Tiny K-Means into up to 3 clusters
-    3) Zero-shot classification into LABELS
-    """
-    # 1) Summaries
-    for r in results:
-        r['summary'] = _fast_summarize(r.get('body', ''))
-
-    # 2) Clustering
-    texts = [r['summary'] for r in results]
-    if len(texts) > 1:
-        embs    = _embedder.encode(texts)
-        k       = min(len(texts), 3)
-        km      = KMeans(n_clusters=k, random_state=0).fit(embs)
-        labels  = km.labels_
-    else:
-        labels = [0] * len(texts)
-
-    for r, lab in zip(results, labels):
-        r['category'] = int(lab)
-
-    # 3) Zero-shot classification
-    for r in results:
-        text = r.get('body') or r['summary']
-        out  = _classifier(text, LABELS)
-        r['classification'] = out['labels'][0]
-
-    return results
-
-def search_emails(query):
-    """
-    Public API: returns a dict with 'lexical' and 'semantic' lists,
-    each enriched on-demand with summary, category, classification.
-    """
-    if not os.path.exists(DB_PATH):
-        raise FileNotFoundError("No db/emails.db found; run ingestion first")
-
-    # (Re)build FTS index
-    _ensure_fts_index()
-
-    # Run both searches
-    lex = _fts_search(query)
-    sem = _semantic_search(query)
-
-    # Enrich only these small sets
-    lex = _summarize_and_categorize(lex)
-    sem = _summarize_and_categorize(sem)
-
-    return {'lexical': lex, 'semantic': sem}

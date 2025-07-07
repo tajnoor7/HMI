@@ -6,6 +6,7 @@ import atexit
 
 import multiprocessing
 import warnings
+import re
 
 # Ingestion pipeline
 from scripts.ingest_emails import (
@@ -16,13 +17,14 @@ from scripts.ingest_emails import (
 )
 
 # Search API
-from scripts.hybrid_search import search_emails, cleanup
+# from scripts.hybrid_search import search_emails, cleanup
+from scripts.hybrid_search_new import search_emails, cleanup
 
 
-# 🔧 Disable parallelism warnings from HuggingFace tokenizers
+# Disable parallelism warnings from HuggingFace tokenizers
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-# 🔧 Ensure safe process spawning (fixes semaphore leak warnings on some systems)
+# Ensure safe process spawning (fixes semaphore leak warnings on some systems)
 try:
     multiprocessing.set_start_method("spawn", force=True)
 except RuntimeError:
@@ -72,10 +74,15 @@ def search():
     try:
         print("working from here")
         results = search_emails(q)
+        # return jsonify({
+        #     'query': q,
+        #     # 'lexical': results['lexical'],
+        #     'semantic': results['semantic']
+        # })
         return jsonify({
-            'query': q,
-            # 'lexical': results['lexical'],
-            'semantic': results['semantic']
+            "query": q,
+            "semantic": results.get("semantic", []),
+            "stories": results.get("stories", [])
         })
     except Exception as e:
         app.logger.error("Search error", exc_info=e)
@@ -90,10 +97,10 @@ def main():
         #    In production, run via gunicorn or uwsgi instead
         app.run(host='0.0.0.0', port=5050, debug=True)
     except KeyboardInterrupt:
-        print("\n🛑 Shutting down gracefully...")
+        print("\nShutting down gracefully...")
         cleanup()
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         cleanup()
         raise
 

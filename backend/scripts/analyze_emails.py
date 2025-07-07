@@ -2,10 +2,10 @@ import sqlite3
 from tqdm import tqdm
 import pandas as pd
 
-# 1️⃣ Summarization
+# Summarization
 from transformers import pipeline
 
-# 2️⃣ Embedding & Clustering
+# Embedding & Clustering
 from sentence_transformers import SentenceTransformer
 from sklearn.cluster import KMeans
 
