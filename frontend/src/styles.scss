@@ -1,0 +1,75 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@theme {
+    --color-white: #fcfcfc;
+    --color-black: #141414;
+    --color-gray: rgb(187, 187, 187);
+    --color-gray-light: rgba(187, 187, 187, 0.36);
+    --color-primary-color: #2b85ff;
+    --color-body-color: #f0f5fb;
+    --color-border-color: #b5b5b5;
+}
+
+.navbar {
+    @apply p-[15px_15px]
+}
+
+.section-title {
+    @apply mb-[30px] flex flex-wrap
+}
+
+.section-title h2 {
+    @apply text-[50px]/[70px] font-[500]
+}
+
+ .navbar-scroll {
+    @apply bg-body-color transition-all z-10 shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]
+}
+
+.chat-area__response--box h1 {
+    @apply text-[25px] font-[600] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box h2 {
+    @apply text-[20px] font-[600] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box h3 {
+    @apply text-[18px] font-[600] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box h4 {
+    @apply text-[25px] font-[600] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box h5 {
+    @apply text-[25px] font-[600] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box h6 {
+    @apply text-[25px] font-[600] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box p {
+    @apply text-[16px] font-[400] text-[#222222] my-[20px]
+}
+
+.chat-area__response--box ul, .chat-area__response--box ol {
+    @apply pl-[25px] my-[20px]
+}
+
+.chat-area__response--box ul li, .chat-area__response--box ol li {
+    @apply list-[auto] mb-[15px] text-[16px]
+}
+
+.chat-area__response--box table {
+    @apply w-[100%] border-collapse my-[20px]
+}
+
+.chat-area__response--box table, .chat-area__response--box th, .chat-area__response--box td {
+    @apply border-gray border-solid border-[1px] p-[10px] text-left text-[16px]
+}
+
+.chat-area__response--box code, .chat-area__response--box pre {
+    @apply bg-[#eee] p-[5px] rounded-[3px]
+}

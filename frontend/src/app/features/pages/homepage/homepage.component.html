@@ -1,0 +1,52 @@
+<section class="min-h-screen bg-gray-50 py-6">
+  <div class="container mx-auto px-4 max-w-3xl">
+    
+    <!-- Search Form -->
+    <form [formGroup]="myForm" (submit)="submit()" class="flex gap-4 mb-8">
+      <input
+        type="text"
+        formControlName="message"
+        placeholder="Type your query"
+        class="flex-grow px-6 py-3 text-base text-gray-900 placeholder-gray-400 bg-white border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      />
+      <button
+        type="submit"
+        class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+      >
+        Submit
+      </button>
+    </form>
+
+    <!-- Loading Message -->
+    <div *ngIf="isGeneration" class="text-center text-gray-700 font-medium mb-6">
+      Generating response...
+    </div>
+
+    <!-- Response Section -->
+    <div *ngIf="response?.length > 0" class="space-y-8">
+      
+      <h2 class="text-2xl font-bold text-gray-900 border-b border-gray-300 pb-2">Response</h2>
+
+      <!-- Email Entries -->
+      <div *ngFor="let item of response" class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
+        <p class="text-sm text-gray-600"><strong>From:</strong> {{ item.sender }}</p>
+        <p class="text-sm text-gray-600"><strong>To:</strong> {{ item.receiver }}</p>
+        <p class="text-sm text-gray-600"><strong>Subject:</strong> {{ item.subject }}</p>
+        <p class="text-sm text-gray-700 mt-2"><strong>Summary:</strong> {{ item.summary }}</p>
+      </div>
+
+      <!-- Pie Chart (Actors) -->
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Actors Involved</h3>
+        <canvas #chartCanvas></canvas>
+      </div>
+
+      <!-- Timeline Bar Chart -->
+      <div class="bg-white rounded-xl shadow-sm p-5">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Timeline of Emails</h3>
+        <canvas #timelineChart width="400" height="200"></canvas>
+      </div>
+
+    </div>
+  </div>
+</section>
