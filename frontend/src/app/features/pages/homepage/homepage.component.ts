@@ -9,11 +9,13 @@ import { Shared } from '../../../core/services/shared/shared';
 import { ChangeDetectorRef } from '@angular/core';
 import Chart from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
+import { CleanActorArrayPipe } from '../../../core/pipes/clean-actors.pipe';
+import { CleanContentPipe } from '../../../core/pipes/clean-content.pipe';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule],
+  imports: [CommonModule, NgxPaginationModule, ReactiveFormsModule, CleanActorArrayPipe, CleanContentPipe],
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
   providers: [ApiCallService]
@@ -61,7 +63,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
     this.subs.sink = this.apiService.generateResponse(data).subscribe({
       next: (res: any) => {
-        this.response = res.semantic;
+        this.response = res.stories;
         this.isGeneration = false;
 
         // Pie Chart (Actors from Semantic[0])

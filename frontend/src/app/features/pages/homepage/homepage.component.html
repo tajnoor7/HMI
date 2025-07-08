@@ -11,7 +11,7 @@
       />
       <button
         type="submit"
-        class="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-full shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+        class="px-6 py-3 bg-indigo-600 text-white font-semibold shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
       >
         Submit
       </button>
@@ -29,10 +29,13 @@
 
       <!-- Email Entries -->
       <div *ngFor="let item of response" class="bg-white border border-gray-200 rounded-xl p-5 shadow-sm">
-        <p class="text-sm text-gray-600"><strong>From:</strong> {{ item.sender }}</p>
-        <p class="text-sm text-gray-600"><strong>To:</strong> {{ item.receiver }}</p>
-        <p class="text-sm text-gray-600"><strong>Subject:</strong> {{ item.subject }}</p>
-        <p class="text-sm text-gray-700 mt-2"><strong>Summary:</strong> {{ item.summary }}</p>
+        <p class="text-sm text-gray-600"><strong>Title:</strong> {{ item.title }}</p>
+        <p class="text-sm text-gray-600"><strong>Actors:</strong> 
+          <ng-container *ngFor="let actor of item.actors | cleanActors; let last = last">
+            {{ actor }}<ng-container *ngIf="!last">, </ng-container>
+          </ng-container>
+        </p>
+        <p class="text-sm text-gray-600"><strong>Story:</strong> {{ item.content | cleanContent }}</p>
       </div>
 
       <!-- Pie Chart (Actors) -->

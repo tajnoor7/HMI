@@ -24,8 +24,8 @@ with on-demand extractive summaries and lightweight topic clustering.
 
 ```bash
 # Clone the repo
-git clone https://github.com/dev-protim/Email_Parser
-cd HMI/backend
+git clone https://github.com/tajnoor7/HMI
+cd backend
 
 # Install dependencies
 pip install --upgrade pip

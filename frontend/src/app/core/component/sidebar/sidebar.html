@@ -4,17 +4,28 @@
   <h2></h2>
   <h2></h2>
 
+  <div class="mb-4 p-2 rounded hover:border hover:border-gray-500 hover:shadow transition">
+  <h3 class="text-lg font-semibold text-gray-900 mb-2">Stories</h3>
+  <ul class="space-y-1 text-gray-800 max-h-40 overflow-y-auto pr-1">
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">General</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Advertisement</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Legal Concern</li>
+    <!-- <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Fraud</li> -->
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Finance</li>
+    <!-- Add more if needed -->
+  </ul>
+</div>
 
 <div class="mb-4 p-2 rounded hover:border hover:border-gray-500 hover:shadow transition">
   <h3 class="text-lg font-semibold text-gray-900 mb-2">People</h3>
   <ul class="space-y-1 text-gray-800 max-h-40 overflow-y-auto pr-1">
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Don Black</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Tamara Johnson</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Phillip K Allen</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Dutch Quigley</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Jane Smith</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Sara Lee</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Michael Brown</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Peter</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Andrew Fastow</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Frank Jeff Dasovich</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">McMahon</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">David Nutt</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Elizabeth Labino</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Kevin Hannon</li>
     <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Alice Johnson</li>
     <!-- Add as many as you want -->
   </ul>
@@ -24,31 +35,17 @@
 <div class="mb-4 p-2 rounded hover:border hover:border-gray-500 hover:shadow transition">
   <h3 class="text-lg font-semibold text-gray-900 mb-2">Organizations</h3>
   <ul class="space-y-1 text-gray-800 max-h-40 overflow-y-auto pr-1">
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">FERC</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Government Affairs</li>
     <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Enron Capital</li>
     <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Enron Broadband</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Project Boomerang</li>
+    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">FERC</li>
     <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Market Strategies</li>
     <!-- Add more as needed -->
   </ul>
 </div>
 
 
-<div class="mb-4 p-2 rounded hover:border hover:border-gray-500 hover:shadow transition">
-  <h3 class="text-lg font-semibold text-gray-900 mb-2">Classification</h3>
-  <ul class="space-y-1 text-gray-800 max-h-40 overflow-y-auto pr-1">
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Project Boomerang</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Finance</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Litigation</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Confidential</li>
-    <li tabindex="0" role="button" class="cursor-pointer px-3 py-1 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500" (click)="generateResponse($event)">Compliance</li>
-    <!-- Add more if needed -->
-  </ul>
-</div>
 
 
-
-  <div class="mt-auto pt-4 text-sm text-gray-700">
-    <p>🌤️ 16°C Sunny</p>
-  </div>
+ 
 </div>

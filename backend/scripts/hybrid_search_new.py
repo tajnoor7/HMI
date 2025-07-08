@@ -11,9 +11,8 @@ from scripts.info_extraction import enrich_with_info_extraction
 from sklearn.metrics.pairwise import cosine_similarity
 from collections import defaultdict
 import google.generativeai as genai
-# import os
 
-api_key = "AIzaSyDfT9sfGN_Te9ZA3A29nxHJb8yOnpUHa6o"
+api_key = "AIzaSyD3L5hciawssTHrp4Ec1IHf5IObRcy8KLI"
 genai.configure(api_key=api_key)
 
 # Force single-process mode to prevent semaphore leaks
@@ -24,7 +23,7 @@ DB_PATH     = 'db/emails.db'
 EMBED_MODEL = 'all-MiniLM-L6-v2'
 LEX_LIMIT   = 10
 SEM_LIMIT   = 10
-SIMILARITY_THRESHOLD = 0.4  # Semantic similarity cutoff for relevance
+SIMILARITY_THRESHOLD = 0.2  # Semantic similarity cutoff for relevance
 
 _embedder = SentenceTransformer(EMBED_MODEL)
 _summarizer = None
@@ -71,7 +70,11 @@ def _fast_summarize(text, max_tokens=130):
     cleaned = _strip_forwarded(text)[:3000]
     try:
         summary = summarizer(cleaned, max_length=max_tokens, min_length=30, do_sample=False)
-        return summary[0]['summary_text'].strip()
+        if summary and isinstance(summary, list) and 'summary_text' in summary[0]:
+            return summary[0]['summary_text'].strip()
+        else:
+            return cleaned.strip()  # fallback
+        # return summary[0]['summary_text'].strip()
     except Exception as e:
         print("Summarization failed:", e)
         return cleaned.strip()
@@ -89,7 +92,7 @@ def _ensure_fts_index():
     """)
     conn.commit(); conn.close()
 
-def _load_limited_embeddings(query, top_k=50):
+def _load_limited_embeddings(query, top_k=100):
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
@@ -220,7 +223,10 @@ def generate_story_narrative(story_emails, project_name):
         f"actor list, and a coherent narrative.\n\n"
         f"Emails:\n{summaries}\n\n"
         f"Output format:\n"
-        f"Title: <title>\nActors: <comma separated actors>\nIntent: {intent}\nContent: <story content>"
+        f"Title: <short, informative title — NOT a person’s name>\n"
+        f"Actors: <comma separated actors>\n"
+        f"Intent: {intent}\n"
+        f"Content: <coherent narrative>"
     )
 
     model = genai.GenerativeModel('gemini-2.5-flash')
@@ -231,16 +237,6 @@ def generate_story_narrative(story_emails, project_name):
             "max_output_tokens": 2048
         }
     )
-
-    # response = genai.chat.create(
-    #     model="gemini-1.5-turbo",
-    #     messages=[
-    #         {"role": "system", "content": "You are a professional journalist."},
-    #         {"role": "user", "content": prompt}
-    #     ],
-    #     temperature=0.3,
-    #     max_tokens=600,
-    # )
 
     # Extract generated content
     print(response, "response")
@@ -253,12 +249,22 @@ def generate_story_narrative(story_emails, project_name):
     actors_line = actors_line.replace("Actors:", "").strip()
     content = "\n".join(content_lines).replace("Content:", "").strip()
 
+    if is_probably_bad_title(title):
+        title = f"{project_name}: {intent.capitalize()} Story"
+
     return {
-        "title": f"{project_name}: {intent.capitalize()} Story",
+        "title": title,
         "actors": actors,
         "intent": intent,
         "content": content
     }
+
+def is_probably_bad_title(title):
+    return (
+        len(title.split()) <= 2 and             # too short (e.g., a name)
+        title.istitle() and                     # looks like a proper noun
+        not re.search(r'\b(report|issue|update|scandal|story|fraud|deal|review|summary)\b', title.lower())
+    )
 
 def group_into_stories(results, project_name, threshold=0.75):
     if not results:
@@ -284,9 +290,13 @@ def group_into_stories(results, project_name, threshold=0.75):
     for cluster in clusters:
         emails = [results[i] for i in cluster]
         # Filter cluster emails strictly by project relationships
-        filtered_emails = filter_by_project_actors(emails, project_name)
-        if not filtered_emails:
-            continue
+        # filtered_emails = filter_by_project_actors(emails, project_name)
+        # if not filtered_emails and len(emails) >= 2:
+        #     filtered_emails = emails
+
+        # if not filtered_emails:
+        #     continue
+
         story = generate_story_narrative(emails, project_name)
         story_groups.append({
             "emails": emails,
@@ -294,6 +304,7 @@ def group_into_stories(results, project_name, threshold=0.75):
             "actors": story["actors"],
             "content": story["content"]
         })
+    print(story_groups, 'story groups')
     return story_groups
 
 def search_emails(query):
