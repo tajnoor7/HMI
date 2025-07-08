@@ -8,7 +8,6 @@ with on-demand extractive summaries and lightweight topic clustering.
 - **Ingestion & Threading**  
   Parses raw email files into SQLite, threading by `In-Reply-To` and normalized subjects.
 - **Hybrid Search**  
-  - **Lexical**: full-text MATCH (all terms) via SQLite FTS4  
   - **Semantic**: cosine similarity over sentence-transformer embeddings  
 - **On-Demand Summaries & Categories**  
   Extractive summaries and mini-KMeans categorization applied only to search results  
