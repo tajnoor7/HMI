@@ -1,31 +1,5 @@
-# import spacy
-
-# nlp = spacy.load("en_core_web_lg")
-
-# def extract_actors(text):
-#     doc = nlp(text)
-#     actors = set()
-#     for ent in doc.ents:
-#         if ent.label_ == "PERSON":
-#             name = ent.text.strip()
-#             if len(name.split()) > 1:
-#                 actors.add(name)
-#     return list(actors)
-
-# def extract_events(text):
-#     # Placeholder: can use verb extraction or keyword spotting
-#     doc = nlp(text)
-#     events = {token.lemma_ for token in doc if token.pos_ == "VERB"}
-#     return list(events)[:5]  # Top 5 verbs as events (customize this)
-
-# def extract_relationships(text):
-#     # Placeholder: relationships can be refined later
-#     return []
-
-
 import spacy
 
-# nlp = spacy.load("en_core_web_lg")
 nlp = spacy.load("en_core_web_lg")
 
 GARBAGE_NAMES = {
@@ -92,13 +66,3 @@ def extract_relationships(text):
             })
 
     return relationships
-
-# def extract_all_entities(text):
-#     actors = extract_actors(text)
-#     events = extract_events(text)
-#     relationships = extract_relationships(text, actors)
-#     return {
-#         "actors": actors,
-#         "events": events,
-#         "relationships": relationships
-#     }

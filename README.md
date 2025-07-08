@@ -25,7 +25,7 @@ with on-demand extractive summaries and lightweight topic clustering.
 ```bash
 # Clone the repo
 git clone https://github.com/dev-protim/Email_Parser
-cd email_parser_project/backend
+cd HMI/backend
 
 # Install dependencies
 pip install --upgrade pip
@@ -34,3 +34,24 @@ pip install -r requirements.txt
 # Run
 1. First add all of the enron files into /backend/INEnron/
 2. Then run python main.py
+
+
+# Angular + Tailwind CSS Starter Setup
+
+This guide sets up an Angular project with **Tailwind CSS** — a modern utility-first CSS framework — for building sleek, responsive UIs with maximum productivity.
+
+---
+
+## Prerequisites
+
+Ensure you have the following installed:
+
+- **Node.js** (v16+ recommended) — [Download Node.js](https://nodejs.org/)
+- **npm
+- **Angular CLI** (v15+ recommended):
+  ```bash
+  npm install -g @angular/cli
+
+- npm install -D tailwindcss postcss autoprefixer
+
+- ng serve (To run the frontend)
